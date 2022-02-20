@@ -8,24 +8,24 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class MedicalSchedule implements Serializable {
+public class MedicalMethod implements Serializable {
 
   private Long id;
 
-  private String description;
+  private Long resultId;
+
+  private String name;
 
   private String type;
 
-  private Date schedule;
+  private String diagnosis;
 
-  private Long createdId;
+  private String conclude;
 
   private Date createdStamp;
 
   private Date modifiedStamp;
-
-  private Boolean status;
 }

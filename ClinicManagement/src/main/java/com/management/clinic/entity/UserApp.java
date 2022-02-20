@@ -1,64 +1,48 @@
 package com.management.clinic.entity;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
-
-@Entity
-@Table(name = "user")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserApp implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+  private Long id;
 
-    @Column(name = "card_id")
-    private String cardId;
+  private String cardId;
 
-    @Column(name = "first_name")
-    private String firstName;
+  private String firstName;
 
-    @Column(name = "last_name")
-    private String lastName;
+  private String lastName;
 
-    private String email;
-    private Date dob;
-    private String avatar;
-    private String username;
-    private String password;
+  private String email;
 
-    @Enumerated(EnumType.ORDINAL)
-    private String gender;
+  private Date dob;
 
-    @Column(name = "phone_number")
-    private String phoneNumber;
+  private String avatar;
 
-    @Column(name = "status")
-    private Boolean status;
+  private String username;
 
-    @Column(name = "created_stamp")
-    private Date createdStamp;
+  private String password;
 
-    @Column(name = "modified_stamp")
-    private Date modifiedStamp;
+  private String gender;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "user_role",
-            joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "role_id")}
-    )
-    private List<RoleApp> roleApps = new ArrayList<>();
+  private String phoneNumber;
+
+  private Boolean status;
+
+  private Date createdStamp;
+
+  private Date modifiedStamp;
+
+  private List<RoleApp> roleApps = new ArrayList<>();
 }

@@ -11,21 +11,23 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class MedicalSchedule implements Serializable {
+public class MedicalResult implements Serializable {
 
   private Long id;
 
-  private String description;
+  private Long scheduleId;
 
-  private String type;
+  private Long patientId;
 
-  private Date schedule;
+  private Long doctorId;
 
-  private Long createdId;
+  private String name;
+
+  private String diagnosis;
+
+  private String conclude;
 
   private Date createdStamp;
 
   private Date modifiedStamp;
-
-  private Boolean status;
 }

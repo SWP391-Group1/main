@@ -48,4 +48,22 @@ public class MedicalScheduleDAOImpl extends AbstractDAO<MedicalSchedule> impleme
             return false;
         }
     }
+
+    @Override
+    public List<MedicalSchedule> findByCreatedId(Long createdId) {
+        String sql = "SELECT * FROM medical_schedule WHERE created_id= ?";
+        return query(sql, new MedicalScheduleMapper(), createdId);
+    }
+
+    @Override
+    public List<MedicalSchedule> findAll() {
+        String sql = "SELECT * FROM medical_schedule";
+        return query(sql, new MedicalScheduleMapper());
+    }
+
+    @Override
+    public void updateStatus(Long scheduleId, Boolean status) {
+        String sql = "UPDATE medical_schedule SET status = ? WHERE id = ?";
+        update(sql, status, scheduleId);
+    }
 }

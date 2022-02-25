@@ -13,10 +13,10 @@ public class MedicalResultDAOImpl extends AbstractDAO<MedicalResult> implements 
     @Override
     public Long save(MedicalResult medicalResult) {
         String sql = "INSERT INTO medical_result (schedule_id, patient_id, doctor_id, name, " +
-                "diagnosis, conclude, created_stamp VALUES (?, ?, ?, ?, ?, ?, ?)";
+                "diagnosis, conclude, created_stamp, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         return insert(sql, medicalResult.getScheduleId(), medicalResult.getPatientId(),
                 medicalResult.getDoctorId(), medicalResult.getName(), medicalResult.getDiagnosis(),
-                medicalResult.getConclude(), new Date());
+                medicalResult.getConclude(), new Date(),true);
     }
 
     @Override

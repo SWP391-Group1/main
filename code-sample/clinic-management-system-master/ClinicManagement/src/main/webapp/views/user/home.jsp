@@ -158,6 +158,7 @@
                                         <th>Status</th>
                                         <th></th>
                                         <th></th>
+                                        <th></th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -176,13 +177,18 @@
                                             <td><fmt:formatDate pattern="dd-MM-yyyy HH:mm a"
                                                                 value="${schedule.schedule}"/></td>
                                             <td>
-                                                <c:if test="${schedule.status}">PENDING</c:if>
-                                                <c:if test="${!schedule.status}">COMPLETED</c:if>
+                                                <c:if test="${schedule.status}"><div style="padding: 5px;background-color: orange;border-radius: 5px;color:#ffffff;font-weight: bold">PENDING</div></c:if>
+                                                <c:if test="${!schedule.status}"><div style="padding: 5px;background-color: green;border-radius: 5px;color:#ffffff;font-weight: bold">COMPLETED</div></c:if>
+                                            </td>
+                                            <td>
+                                                <c:url value="/result/add" var="urlResultAdd">
+                                                    <c:param name="scheduleId" value="${schedule.id}"/>
+                                                </c:url>
+                                                <c:if test="${schedule.status}"><a type="button" class="btn btn-primary" href="${urlResultAdd}">Create result</a></c:if>
                                             </td>
                                             <td>
                                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#detailSchedule${schedule.id}">Detail</button>
                                             </td>
-
                                             <td>
                                                 <c:url var="urlUpdate" value="/schedule/update">
                                                     <c:param name="id" value="${schedule.id}"/>

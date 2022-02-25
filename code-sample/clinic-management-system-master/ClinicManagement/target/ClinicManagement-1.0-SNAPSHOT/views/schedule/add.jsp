@@ -33,6 +33,7 @@
                     <div class="col-xl-8 col-lg-7">
                         <div class="card shadow mb-4">
                             <div class="card-body">
+                                <h2>Booking Schedule</h2>
                                 <div class="d-flex justify-content-center">
                                     <form style="width: 400px" id="formLogin" action="<c:url value='/schedule/add'/>" method="POST">
                                         <c:if test="${not empty requestScope.messageParam}">

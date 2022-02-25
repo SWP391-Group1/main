@@ -15,9 +15,9 @@ public class MedicalMethodMapper implements RowMapper<MedicalMethod> {
             medicalMethod.setName(rs.getString("name"));
             medicalMethod.setDiagnosis(rs.getString("diagnosis"));
             medicalMethod.setConclude(rs.getString("conclude"));
-            medicalMethod.setType(rs.getString("type"));
-            medicalMethod.setCreatedStamp(rs.getDate("createdStamp"));
-            medicalMethod.setCreatedStamp(rs.getDate("modifiedStamp"));
+            //medicalMethod.setType(rs.getString("type"));
+            medicalMethod.setCreatedStamp(rs.getDate("created_stamp"));
+            medicalMethod.setCreatedStamp(rs.getDate("modified_stamp"));
             return medicalMethod;
         } catch (SQLException e) {
             e.printStackTrace();

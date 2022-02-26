@@ -1,6 +1,7 @@
 package com.management.clinic.mapper;
 
 import com.management.clinic.entity.MedicalResult;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 

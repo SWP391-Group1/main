@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
           integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
     <link
-            href="<c:url value='/template/login/style.css' />"
+            href="<c:url value='../../static/css/login/style.css' />"
             rel="stylesheet" type="text/css" media="all"/>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
@@ -19,6 +19,7 @@
 </head>
 <body>
 <div class="container h-100">
+
     <div class="d-flex justify-content-center h-100">
         <div class="user_card">
             <div class="d-flex justify-content-center">
@@ -31,9 +32,9 @@
             <br/>
             <div class="d-flex justify-content-center form_container">
                 <form id="formLogin" action="<c:url value="/user/sign-in"/>" method="POST">
-                    <c:if test="${not empty messageParam}">
-                        <div class="alert alert-${alert}" role="alert">
-                                ${messageParam}
+                    <c:if test="${not empty requestScope.messageParam}">
+                        <div class="alert alert-${requestScope.alert}" role="alert">
+                                ${requestScope.messageParam}
                         </div>
                     </c:if>
                     <div class="input-group mb-3">
@@ -60,9 +61,6 @@
             <div class="mt-4">
                 <div class="d-flex justify-content-center links">
                     Don't have an account? <a href="<c:url value="/user/sign-up"/>" class="ml-2">Sign Up</a>
-                </div>
-                <div class="d-flex justify-content-center links">
-                    <a href="#">Forgot your password?</a>
                 </div>
             </div>
         </div>

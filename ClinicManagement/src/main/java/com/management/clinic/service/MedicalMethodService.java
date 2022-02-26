@@ -1,19 +1,21 @@
 package com.management.clinic.service;
 
 import com.management.clinic.entity.MedicalMethod;
-import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 public interface MedicalMethodService {
-  MedicalMethod save(MedicalMethod medicalMethod);
 
-  MedicalMethod update(MedicalMethod medicalMethod);
+    MedicalMethod save(MedicalMethod medicalMethod);
 
-  MedicalMethod findById(Long id);
+    MedicalMethod update(MedicalMethod medicalMethod);
 
-  boolean delete(Long id);
+    MedicalMethod findById(Long id);
 
-  List<MedicalMethod> findByResultId(Long resultId);
+    boolean delete(Long id);
 
-  MedicalMethod buildData(HttpServletRequest req);
+    List<MedicalMethod> findByResultId(Long resultId);
+
+    MedicalMethod buildData(HttpServletRequest req);
 }

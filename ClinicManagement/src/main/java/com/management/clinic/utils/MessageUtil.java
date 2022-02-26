@@ -10,9 +10,17 @@ public class MessageUtil {
             String messageParam = request.getParameter("message");
             String message = "";
             String alert = "";
-            if (messageParam.equalsIgnoreCase("LOGIN_FAILED")) {
+            if (messageParam.equalsIgnoreCase(MessageConstant.LOGIN_FAILED)) {
                 message = MessageConstant.LOGIN_FAILED;
                 alert = "danger";
+            }
+            if (messageParam.equalsIgnoreCase(MessageConstant.USERNAME_EXISTED)) {
+                message = MessageConstant.USERNAME_EXISTED;
+                alert = "danger";
+            }
+            if (messageParam.equalsIgnoreCase(MessageConstant.UPDATE_PROFILE_SUCCESS)) {
+                message = MessageConstant.UPDATE_PROFILE_SUCCESS;
+                alert = "success";
             }
             request.setAttribute("messageParam", message);
             request.setAttribute("alert", alert);

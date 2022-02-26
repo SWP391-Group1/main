@@ -5,6 +5,7 @@ import com.management.clinic.entity.UserApp;
 import com.management.clinic.mapper.UserAppMapper;
 import org.apache.commons.collections.CollectionUtils;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -18,21 +19,25 @@ public class UserDAOImpl extends AbstractDAO<UserApp> implements UserDAO {
     }
 
     @Override
+    public UserApp findByUsername(String username) {
+        String sql = "SELECT * FROM user WHERE username =?";
+        List<UserApp> userApps = query(sql, new UserAppMapper(), username);
+        return CollectionUtils.isEmpty(userApps) ? null : userApps.get(0);
+    }
+
+    @Override
     public Long save(UserApp userApp) {
-        String sql = "INSERT INTO user (first_name, last_name, card_id, gender, dob, phone_number, email, " +
-                "username, password, status, created_stamp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO user (first_name, last_name, card_id, gender, dob, phone_number, avatar, email, username, password, status, created_stamp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         return insert(sql, userApp.getFirstName(), userApp.getLastName(), userApp.getCardId(), userApp.getGender(),
-                userApp.getDob(), userApp.getPhoneNumber(), userApp.getEmail(), userApp.getUsername(),
+                userApp.getDob(), userApp.getPhoneNumber(), userApp.getAvatar(), userApp.getEmail(), userApp.getUsername(),
                 userApp.getPassword(), userApp.getStatus(), new Date());
     }
 
     @Override
     public void update(UserApp userApp) {
-        String sql = "UPDATE user SET first_name=?, last_name=?, card_id=?, gender=?, dob=?, phone_number=?, " +
-                "email=?, avatar=?, password=?, modified_stamp WHERE id =?";
-        update(sql, sql, userApp.getFirstName(), userApp.getLastName(), userApp.getCardId(), userApp.getGender(),
-                userApp.getDob(), userApp.getPhoneNumber(), userApp.getEmail(), userApp.getAvatar(),
-                userApp.getPassword(), new Date(), userApp.getId());
+        String sql = "UPDATE user SET first_name=?, last_name=?, card_id=?, gender=?, dob=?, phone_number=?, email=?, avatar=?, modified_stamp=? WHERE id =?";
+        update(sql, userApp.getFirstName(), userApp.getLastName(), userApp.getCardId(), userApp.getGender(),
+                userApp.getDob(), userApp.getPhoneNumber(), userApp.getEmail(), userApp.getAvatar(), new Timestamp(new Date().getTime()), userApp.getId());
     }
 
     @Override

@@ -100,7 +100,12 @@ public class UserController extends HttpServlet {
                     userApp.setPassword(password);
                     String src = FileUtil.getUploadImage(req, serverPath);
                     userApp.setAvatar(src);
-
+//                List<RoleApp> roles= new ArrayList<>();
+//                RoleApp roleUser=new RoleApp();
+//                roleUser.setId(1L);
+//                roleUser.setName("ROLE_USER");
+//                roles.add(roleUser);
+//                userApp.setRoleApps(roles);
                     userApp = userService.signUp(userApp);
                     if (userApp != null) {
                         HttpSession session = req.getSession();

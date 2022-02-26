@@ -13,16 +13,16 @@ public class MedicalScheduleDAOImpl extends AbstractDAO<MedicalSchedule> impleme
 
     @Override
     public Long save(MedicalSchedule medicalSchedule) {
-        String sql = "INSERT INTO medical_schedule (created_id, description, schedule, type, created_stamp, " +
-                "VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO medical_schedule (created_id, description, schedule, type, status, created_stamp) " +
+                "VALUES (?, ?, ?, ?, ?, ?)";
         return insert(sql, medicalSchedule.getCreatedId(), medicalSchedule.getDescription(),
-                medicalSchedule.getSchedule(), medicalSchedule.getType(), new Date());
+                medicalSchedule.getSchedule(), medicalSchedule.getType(), true, new Date());
     }
 
     @Override
     public MedicalSchedule update(MedicalSchedule medicalSchedule) {
-        String sql = "UPDATE user SET description=?, schedule=?, type=?, modifiedStamp=? WHERE id =?";
-        update(sql, sql, medicalSchedule.getDescription(), medicalSchedule.getSchedule(),
+        String sql = "UPDATE medical_schedule SET description=?, schedule=?, type=?, modified_stamp=? WHERE id =?";
+        update(sql, medicalSchedule.getDescription(), medicalSchedule.getSchedule(),
                 medicalSchedule.getType(), new Date(), medicalSchedule.getId());
         return medicalSchedule;
     }
@@ -37,16 +37,18 @@ public class MedicalScheduleDAOImpl extends AbstractDAO<MedicalSchedule> impleme
     @Override
     public boolean delete(Long id) {
         try {
-            String sql = "DELETE FROM medical_schedule WHERE id = ?";
-            // Check: if exist medical_result ==> Cannot delete
-
-            //
-            update(sql, id);
-            return true;
+            MedicalSchedule medicalSchedule = this.findById(id);
+            if (medicalSchedule != null) {
+                if (medicalSchedule.getStatus()) {
+                    String sql = "DELETE FROM medical_schedule WHERE id = ?";
+                    update(sql, id);
+                    return true;
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
         }
+        return false;
     }
 
     @Override

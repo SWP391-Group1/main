@@ -36,15 +36,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserApp updateInfo(UserApp userApp) {
         userDAO.update(userApp);
-        return userApp;
+        return userDAO.findByUsername(userApp.getUsername());
     }
 
     @Override
     public UserApp signUp(UserApp userApp) {
         // Check: if username is already ==> Can not sign up
-        long record = userDAO.save(userApp);
-        userApp.setPassword("");
-        if (record > 0) {
+        if (userDAO.findByUsername(userApp.getUsername()) == null) {
+            long id = userDAO.save(userApp);
+            userApp=userDAO.findById(id);
             return userApp;
         }
         return null;

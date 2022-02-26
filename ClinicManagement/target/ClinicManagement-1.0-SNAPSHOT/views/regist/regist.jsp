@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
           integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
     <link
-            href="<c:url value='/template/login/style.css' />"
+            href="<c:url value='../../static/css/login/style.css' />"
             rel="stylesheet" type="text/css" media="all"/>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
@@ -27,7 +27,7 @@
                 </div>
             </div>
             <div class="d-flex justify-content-center">
-                <form onsubmit="return checkFormRegist()" id="formLogin" action="<c:url value="/user/sign-up"/>" method="POST">
+                <form onsubmit="return checkFormRegist()" id="formLogin" action="<c:url value="/user/sign-up"/>" method="POST" enctype="multipart/form-data">
                     <c:if test="${not empty requestScope.messageParam}">
                         <div class="alert alert-${requestScope.alert}" role="alert">
                                 ${requestScope.messageParam}
@@ -87,14 +87,18 @@
                     </div>
                     <div class="form-group">
                         <label for="regisPass" class="col-form-label">Password</label>
-                        <input required name="password" type="text" class="form-control" id="regisPass">
+                        <input required name="password" type="password" class="form-control" id="regisPass">
                     </div>
                     <div class="form-group">
                         <label for="regisCheckPass" class="col-form-label">Confirm Password</label>
-                        <input required name="rePassword" type="text" class="form-control" id="regisCheckPass">
+                        <input required name="rePassword" type="password" class="form-control" id="regisCheckPass">
                         <p style="color: red" id="checkConfirm"></p>
                     </div>
-
+                    <div class="form-group">
+                        <label for="dob" class="col-form-label">Avatar</label><br/>
+                        <input required id="avatar" onchange="readURL(this);" name="avatar" type="file" accept="image/*" />
+                        <img id="blah" width="200" height="200" src="<c:url value="/static/image/image.png"/>" alt="your image" />
+                    </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary">Regist</button>
                     </div>
@@ -106,18 +110,32 @@
                     Have an account? <a href="<c:url value="/user/sign-in"/>" class="ml-2">Sign
                     In</a>
                 </div>
-                <div class="d-flex justify-content-center links">
-                    <a href="#">Forgot your password?</a>
-                </div>
             </div>
         </div>
     </div>
 </div>
 </body>
 <script type="text/javascript">
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#blah')
+                    .attr('src', e.target.result)
+                    .width(200)
+                    .height(200);
+            };
+            reader.readAsDataURL(input.files[0]);
+        }else{
+            $('#blah')
+                .attr('src',"/static/image/image.png")
+                .width(200)
+                .height(200);
+        }
+    }
     const PATTERN_TEXT = "[A-Za-z0-9]{1,100}";
     const PATTERN_EMAIL = "[A-Za-z0-9]{1,}@[A-Za-z0-9]{1,}";
-    const PATTERN_PHONE = "[0-9]{10}";
+    const PATTERN_PHONE = "[0-9]{10,10}";
     const checkFormRegist = () => {
         // document.getElementById("checkName").innerHTML = "";
         // document.getElementById("checkPass").innerHTML = "";
@@ -128,7 +146,10 @@
         var regisCheckPass = document.getElementById("regisCheckPass").value.trim();
         var regisPhone = document.getElementById("regisPhone").value.trim();
         var check = true;
-
+        if(regisPhone.length!=10){
+            document.getElementById("checkPhone").innerHTML = "invalid phone"
+            check = false;
+        }
         if (!regisPhone.match(PATTERN_PHONE)) {
             document.getElementById("checkPhone").innerHTML = "invalid phone"
             check = false;

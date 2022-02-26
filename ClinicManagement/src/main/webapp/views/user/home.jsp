@@ -23,7 +23,36 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
 
+<%--    <link href="<c:url value='/template/web/makup/css/bootstrap.css' />" rel="stylesheet"/>--%>
+
+<%--    <link href="<c:url value='/template/web/makup/css/font-awesome.min.css' />" rel="stylesheet"/>--%>
+
+<%--    <link href="<c:url value='/template/web/makup/style.css' />" rel="stylesheet"/>--%>
+
+<%--    <link href="<c:url value='/template/web/makup/css/responsive.css' />" rel="stylesheet"/>--%>
+
+<%--    <link href="<c:url value='/template/web/makup/css/colors.css' />" rel="stylesheet"/>--%>
+
+<%--    <link href="<c:url value='/template/web/makup/css/version/tech.css' />" rel="stylesheet"/>--%>
+
+    <link rel="stylesheet"
+          href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet"
+          href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type='text/javascript'
+            src='<c:url value="/template/health-news/js/jquery-2.2.3.min.js" />'></script>
+    <script
+            src="<c:url value='/template/health-news/assets/js/jquery.2.1.1.min.js' />"></script>
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script src="<c:url value='/template/paging/jquery.twbsPagination.js' />"></script>
 </head>
 
 <body id="page-top">
@@ -34,236 +63,163 @@
 
         <div id="content">
 
-            <%@include file="../components/topbar/topbar.jsp"%>
+            <%@include file="../components/topbar/topbar.jsp" %>
 
             <!-- Begin Page Content -->
             <div class="container-fluid">
-
-                <!-- Page Heading -->
-<%--                <div class="d-sm-flex align-items-center justify-content-between mb-4">--%>
-<%--                    <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>--%>
-<%--                    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i--%>
-<%--                            class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>--%>
-<%--                </div>--%>
-
-                <!-- Content Row -->
-<%--                <div class="row">--%>
-
-<%--                    <!-- Earnings (Monthly) Card Example -->--%>
-<%--                    <div class="col-xl-3 col-md-6 mb-4">--%>
-<%--                        <div class="card border-left-primary shadow h-100 py-2">--%>
-<%--                            <div class="card-body">--%>
-<%--                                <div class="row no-gutters align-items-center">--%>
-<%--                                    <div class="col mr-2">--%>
-<%--                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">--%>
-<%--                                            Earnings (Monthly)--%>
-<%--                                        </div>--%>
-<%--                                        <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>--%>
-<%--                                    </div>--%>
-<%--                                    <div class="col-auto">--%>
-<%--                                        <i class="fas fa-calendar fa-2x text-gray-300"></i>--%>
-<%--                                    </div>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-
-<%--                    <!-- Earnings (Monthly) Card Example -->--%>
-<%--                    <div class="col-xl-3 col-md-6 mb-4">--%>
-<%--                        <div class="card border-left-success shadow h-100 py-2">--%>
-<%--                            <div class="card-body">--%>
-<%--                                <div class="row no-gutters align-items-center">--%>
-<%--                                    <div class="col mr-2">--%>
-<%--                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">--%>
-<%--                                            Earnings (Annual)--%>
-<%--                                        </div>--%>
-<%--                                        <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>--%>
-<%--                                    </div>--%>
-<%--                                    <div class="col-auto">--%>
-<%--                                        <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>--%>
-<%--                                    </div>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-
-<%--                    <!-- Earnings (Monthly) Card Example -->--%>
-<%--                    <div class="col-xl-3 col-md-6 mb-4">--%>
-<%--                        <div class="card border-left-info shadow h-100 py-2">--%>
-<%--                            <div class="card-body">--%>
-<%--                                <div class="row no-gutters align-items-center">--%>
-<%--                                    <div class="col mr-2">--%>
-<%--                                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tasks--%>
-<%--                                        </div>--%>
-<%--                                        <div class="row no-gutters align-items-center">--%>
-<%--                                            <div class="col-auto">--%>
-<%--                                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>--%>
-<%--                                            </div>--%>
-<%--                                            <div class="col">--%>
-<%--                                                <div class="progress progress-sm mr-2">--%>
-<%--                                                    <div class="progress-bar bg-info" role="progressbar"--%>
-<%--                                                         style="width: 50%" aria-valuenow="50" aria-valuemin="0"--%>
-<%--                                                         aria-valuemax="100"></div>--%>
-<%--                                                </div>--%>
-<%--                                            </div>--%>
-<%--                                        </div>--%>
-<%--                                    </div>--%>
-<%--                                    <div class="col-auto">--%>
-<%--                                        <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>--%>
-<%--                                    </div>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-
-<%--                    <!-- Pending Requests Card Example -->--%>
-<%--                    <div class="col-xl-3 col-md-6 mb-4">--%>
-<%--                        <div class="card border-left-warning shadow h-100 py-2">--%>
-<%--                            <div class="card-body">--%>
-<%--                                <div class="row no-gutters align-items-center">--%>
-<%--                                    <div class="col mr-2">--%>
-<%--                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">--%>
-<%--                                            Pending Requests--%>
-<%--                                        </div>--%>
-<%--                                        <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>--%>
-<%--                                    </div>--%>
-<%--                                    <div class="col-auto">--%>
-<%--                                        <i class="fas fa-comments fa-2x text-gray-300"></i>--%>
-<%--                                    </div>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-
-                <!-- Content Row -->
                 <div class="row">
                     <!-- Area Chart -->
-                    <div class="col-xl-8 col-lg-7">
+                    <div class="col-xl-12 col-lg-12">
                         <div class="card shadow mb-4">
                             <!-- Card Body -->
                             <div class="card-body">
-                                <div>
-                                    <h2>List schedule booking</h2>
-                                    <a href="<c:url value='/schedule/add'/>" type="button" class="btn btn-success">Add
-                                        Schedule</a>
-                                </div>
-                                <table class="table">
-                                    <thead>
-                                    <tr>
-                                        <th>Id</th>
-                                        <th>Description</th>
-                                        <th>Type</th>
-                                        <th>Schedule</th>
-                                        <th>Status</th>
-                                        <th></th>
-                                        <th></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <c:forEach items="${requestScope.medicalScheduleList}" var="schedule">
-                                        <tr>
-                                            <td>${schedule.id}</td>
-                                            <td>
-                                                <div style="width: 100px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
-                                                        ${schedule.description}
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <c:if test="${schedule.type eq 'TEST_COVID'}">Test Covid</c:if>
-                                                <c:if test="${schedule.type eq 'HEALTH_CARE'}">Health Care</c:if>
-                                            </td>
-                                            <td><fmt:formatDate pattern="dd-MM-yyyy HH:mm a"
-                                                                value="${schedule.schedule}"/></td>
-                                            <td>
-                                                <c:if test="${schedule.status}">PENDING</c:if>
-                                                <c:if test="${!schedule.status}">COMPLETED</c:if>
-                                            </td>
-                                            <td>
-                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#detailSchedule${schedule.id}">Detail</button>
-                                            </td>
-
-                                            <td>
-                                                <c:url var="urlUpdate" value="/schedule/update">
-                                                    <c:param name="id" value="${schedule.id}"/>
-                                                </c:url>
-                                                <a type="button" class="btn btn-warning" href="${urlUpdate}">Update</a>
-                                            </td>
-
-                                            <td>
-                                                <c:if test="${schedule.status}">
-                                                    <form action="<c:url value='/schedule/delete'/>" method="POST">
-                                                        <input name="id" hidden value="${schedule.id}"/>
-                                                        <button type="submit" class="btn btn-danger">Delete</button>
-                                                    </form>
-                                                </c:if>
-                                            </td>
-
-                                        </tr>
-                                        <div class="modal fade" id="detailSchedule${schedule.id}" tabindex="-1" role="dialog" aria-labelledby="detailSchedule${schedule.id}" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Detail</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
+                                <div class="panel-body" >
+                                    <form action="<c:url value='/user/home'/>" id="formSubmit" method="get">
+                                        <div class="row">
+                                            <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="page-wrapper">
+                                                    <div class="blog-top clearfix">
+                                                        <h4 class="pull-left">Health news <a><i class="fa fa-rss"></i></a></h4>
                                                     </div>
-                                                    <div class="modal-body">
-                                                        <div class="card-body">
-                                                            <div class="row">
-                                                                <p class="card-text" style="text-align: left;font-weight: bold;color: #000000">Id: </p>
-                                                                <p class="card-text" style="text-align: left;margin-left: 10px;color: #000000">${schedule.id}</p>
+
+                                                    <div class="blog-list clearfix">
+                                                        <c:forEach var="item" items="${model.listResult}">
+                                                            <div class="blog-box row">
+                                                                <div class="col-md-4">
+                                                                    <div class="post-media">
+                                                                        <a href='<c:url value=""/>'>
+                                                                            <img src="${item.thumbnail}" alt="" class="img-fluid">
+                                                                            <div class="hovereffect"></div>
+                                                                        </a>
+                                                                    </div><!-- end media -->
+                                                                </div><!-- end col -->
+
+                                                                <div class="blog-meta big-meta col-md-8">
+                                                                    <h4>
+                                                                        <a href='<c:url value="/news/details?id=${item.id}&user=true"/>'>${item.title}</a>
+                                                                    </h4>
+                                                                    <p>${item.shortDescription}</p>
+                                                                    <small><a
+                                                                            href='<c:url value="/news/details?id=${item.id}&user=true"/>'>${item.createdStamp}</a></small>
+                                                                    <small><a
+                                                                            href='<c:url value="/news/details?id=${item.id}&user=true"/>'>${item.createdBy}</a></small>
+                                                                </div>
                                                             </div>
-                                                            <div class="row" style="width: 300px">
-                                                                <p class="card-text" style="text-align: left;font-weight: bold;color: #000000">Description: </p>
-                                                                <p class="card-text" style="text-align: left;margin-left: 10px;color: #000000;width: 200px">${schedule.description}</p>
-                                                            </div>
-                                                            <div class="row">
-                                                                <p class="card-text" style="text-align: left;font-weight: bold;color: #000000">Type: </p>
-                                                                <p class="card-text" style="text-align: left;margin-left: 10px;color: #000000">
-                                                                    <c:if test="${schedule.type eq 'TEST_COVID'}">Test Covid</c:if>
-                                                                    <c:if test="${schedule.type eq 'HEALTH_CARE'}">Health Care</c:if>
-                                                                </p>
-                                                            </div>
-                                                            <div class="row">
-                                                                <p class="card-text" style="text-align: left;font-weight: bold;color: #000000">Schedule: </p>
-                                                                <p class="card-text" style="text-align: left;margin-left: 10px;color: #000000">
-                                                                    <fmt:formatDate pattern="dd-MM-yyyy HH:mm a" value="${schedule.schedule}"/>
-                                                                </p>
-                                                            </div>
-                                                            <div class="row">
-                                                                <p class="card-text" style="text-align: left;font-weight: bold;color: #000000">Status: </p>
-                                                                <p class="card-text" style="text-align: left;margin-left: 10px;color: #000000">
-                                                                    <c:if test="${schedule.status}">PENDING</c:if>
-                                                                    <c:if test="${!schedule.status}">COMPLETED</c:if></p>
+
+                                                            <hr class="invis">
+                                                        </c:forEach>
+                                                    </div>
+
+                                                </div>
+
+                                                <hr class="invis">
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <nav aria-label="Page navigation">
+                                                            <ul class="pagination" id="pagination"></ul>
+                                                            <input type="hidden" value="" id="page" name="page"/>
+                                                            <input type="hidden" value="" id="maxPageItem" name="maxPageItem"/>
+                                                            <input type="hidden" value="" id="sortName" name="sortName"/>
+                                                            <input type="hidden" value="" id="sortBy" name="sortBy"/>
+                                                            <input type="hidden" value="true" id="user" name="user"/>
+                                                        </nav>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="sidebar">
+                                                    <div class="widget">
+                                                        <div class="banner-spot clearfix">
+                                                            <div class="banner-img">
+                                                                <img src='<c:url value="/template/web/upload/5k.png"/>' class="img-fluid">
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                    </div>
+
                                                 </div>
                                             </div>
                                         </div>
-                                    </c:forEach>
-                                    </tbody>
-                                </table>
+                                    </form>
+                                </div>
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <%@include file="../components/footer/footer.jsp"%>
+        <%@include file="../components/footer/footer.jsp" %>
     </div>
 </div>
 <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
 </a>
 
+<script>
+    console.log("Start paging............")
+    var totalPages = ${model.totalPage};
+    var currentPage = ${model.page};
+    var limit = 2;
+    $(function () {
+        window.pagObj = $('#pagination').twbsPagination({
+            totalPages: totalPages,
+            visiblePages: 10,
+            startPage: currentPage,
+            onPageClick: function (event, page) {
+                if (currentPage != page) {
+                    $('#maxPageItem').val(limit);
+                    $('#page').val(page);
+                    $('#sortName').val('title');
+                    $('#sortBy').val('desc');
+                    $('#formSubmit').submit();
+                }
+            }
+        });
+    });
+</script>
 
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 
+<script type="text/javascript"
+        src="<c:url value='/template/web/makup/js/tether.min.js' />"></script>
+
+<script type="text/javascript"
+        src="<c:url value='/template/web/makup/js/custom.js' />"></script>
+
+<script type="text/javascript"
+        src="<c:url value='/template/web/makup/js/bootstrap.min.js' />"></script>
+
+<script type="text/javascript"
+        src="<c:url value='/template/web/makup/js/custom.js' />"></script>
+
+<script
+        src="<c:url value='/template/health-news/assets/js/bootstrap.min.js' />"></script>
+<script
+        src="<c:url value='/template/health-news/assets/js/jquery-ui.custom.min.js' />"></script>
+<script
+        src="<c:url value='/template/health-news/assets/js/jquery.ui.touch-punch.min.js' />"></script>
+<script
+        src="<c:url value='/template/health-news/assets/js/jquery.easypiechart.min.js' />"></script>
+<script
+        src="<c:url value='/template/health-news/assets/js/jquery.sparkline.min.js' />"></script>
+<script
+        src="<c:url value='/template/health-news/assets/js/jquery.flot.min.js' />"></script>
+<script
+        src="<c:url value='/template/health-news/assets/js/jquery.flot.pie.min.js' />"></script>
+<script
+        src="<c:url value='/template/health-news/assets/js/jquery.flot.resize.min.js' />"></script>
+<script
+        src="<c:url value='/template/health-news/assets/js/ace-elements.min.js' />"></script>
+<script src="<c:url value='/template/health-news/assets/js/ace.min.js' />"></script>
+<script
+        src="<c:url value='/template/health-news/assets/js/bootstrap.min.js'/>"></script>
+
+<script
+        src="<c:url value='/template/health-news/assets/js/jquery-ui.min.js'/>"></script>
 <!-- Bootstrap core JavaScript-->
 <script src="vendor/jquery/jquery.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

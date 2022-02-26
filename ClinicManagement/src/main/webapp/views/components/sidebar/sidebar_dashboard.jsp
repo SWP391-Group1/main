@@ -39,43 +39,46 @@
                 <span>Home</span></a>
         </li>
         <li class="nav-item active">
-            <a class="nav-link" href="<c:url value='/schedule/add'/>">
+            <a class="nav-link" href="<c:url value='/schedule/table'/>">
                 <i class="fas fa-solid fa-calendar-check"></i>
-                <span>Add schedule</span></a>
+                <span>Schedule</span></a>
         </li>
-        <!-- Divider -->
-<%--        <hr class="sidebar-divider">--%>
 
-<%--        <!-- Heading -->--%>
-<%--        <div class="sidebar-heading">--%>
-<%--            Interface--%>
-<%--        </div>--%>
+        <c:if test="${sessionScope.USER_ROLE eq 'PATIENT'}">
+            <li class="nav-item active">
+                <a class="nav-link" href="<c:url value='/schedule/add'/>">
+                    <i class="fas fa-solid fa-calendar-check"></i>
+                    <span>Add schedule</span></a>
+            </li>
+        </c:if>
+        <c:if test="${sessionScope.USER_ROLE eq 'ADMIN'}">
+            <li class="nav-item active">
+                <a class="nav-link" href="<c:url value='/news?page=1&maxPageItem=2&sortName=title&sortBy=DESC'/>">
+                    <i class="fas fa-solid fa-newspaper"></i>
+                    <span>Health news</span></a>
+            </li>
+        </c:if>
+        <li class="nav-item active">
+            <a class="nav-link" href="<c:url value="/user/profile"/>">
+                <i class="fas fa-user"></i>
+                Profile
+            </a>
 
-<%--        <!-- Divider -->--%>
-<%--        <hr class="sidebar-divider">--%>
-<%--        <!-- Heading -->--%>
-<%--        <div class="sidebar-heading">--%>
-<%--            Addons--%>
-<%--        </div>--%>
-
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="<c:url value="/user/sign-out"/>">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
+            </a>
+        </li>
     </ul>
 </div>
-
-<!-- Bootstrap core JavaScript-->
-<script src="./../template/layout_dashboard/vendor/jquery/jquery.min.js"></script>
 <script src="./../template/layout_dashboard/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <!-- Core plugin JavaScript-->
-<script src="./../template/layout_dashboard/vendor/jquery-easing/jquery.easing.min.js"></script>
 
 <!-- Custom scripts for all pages-->
 <script src="./../template/layout_dashboard/js/sb-admin-2.min.js"></script>
 
-<!-- Page level plugins -->
-<script src="./../template/layout_dashboard/vendor/chart.js/Chart.min.js"></script>
-
-<!-- Page level custom scripts -->
-<script src="./../template/layout_dashboard/js/demo/chart-area-demo.js"></script>
-<script src="./../template/layout_dashboard/js/demo/chart-pie-demo.js"></script>
 </body>
 </html>

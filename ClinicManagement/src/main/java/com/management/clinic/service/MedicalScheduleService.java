@@ -13,9 +13,9 @@ public interface MedicalScheduleService {
 
     MedicalSchedule findById(Long id);
 
-    boolean delete(Long id);
-
     List<MedicalSchedule> findByCreatedId(Long createdId);
+
+    boolean delete(Long id);
 
     MedicalSchedule buildDataCreate(HttpServletRequest req) throws Exception;
 

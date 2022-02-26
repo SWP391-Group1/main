@@ -21,7 +21,10 @@ public class MedicalScheduleImpl implements MedicalScheduleService {
     @Override
     public MedicalSchedule save(MedicalSchedule medicalSchedule) {
         Long id = medicalScheduleDAO.save(medicalSchedule);
-        return this.findById(id);
+        if (id != null) {
+            return this.findById(id);
+        }
+        return null;
     }
 
     @Override
@@ -35,13 +38,13 @@ public class MedicalScheduleImpl implements MedicalScheduleService {
     }
 
     @Override
-    public boolean delete(Long id) {
-        return medicalScheduleDAO.delete(id);
+    public List<MedicalSchedule> findByCreatedId(Long id) {
+        return medicalScheduleDAO.findByCreatedId(id);
     }
 
     @Override
-    public List<MedicalSchedule> findByCreatedId(Long id) {
-        return medicalScheduleDAO.findByCreatedId(id);
+    public boolean delete(Long id) {
+        return medicalScheduleDAO.delete(id);
     }
 
     @Override

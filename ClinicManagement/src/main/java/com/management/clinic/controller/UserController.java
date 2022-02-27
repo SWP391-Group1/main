@@ -47,6 +47,12 @@ public class UserController extends HttpServlet {
             case "/user/sign-up":
                 req.getRequestDispatcher("/views/regist/regist.jsp").forward(req, resp);
                 break;
+            case "/user/sign-out": {
+                HttpSession session = req.getSession();
+                session.invalidate();
+                req.getRequestDispatcher("/views/login/login.jsp").forward(req, resp);
+            }
+            break;
             case "/user/home":
                 HttpSession session = req.getSession();
                 UserApp userApp = (UserApp) session.getAttribute(SessionConstant.USER_APP);

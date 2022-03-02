@@ -83,6 +83,7 @@
                                                 <c:if test="${!schedule.status}"><div style="padding: 5px;background-color: green;border-radius: 5px;color:#ffffff;font-weight: bold">COMPLETED</div></c:if>
                                             </td>
                                             <td>
+                                                <c:url value="/result/add" var="urlResultAdd">
                                                     <c:param name="scheduleId" value="${schedule.id}"/>
                                                 </c:url>
                                                 <c:if test="${schedule.status}"><a type="button" class="btn btn-primary" href="${urlResultAdd}">Create result</a></c:if>
@@ -106,7 +107,6 @@
                                                 </c:if>
                                             </td>
                                         </tr>
-
 
                                         <div class="modal fade" id="detailSchedule${schedule.id}" tabindex="-1" role="dialog" aria-labelledby="detailSchedule${schedule.id}" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
@@ -154,6 +154,7 @@
                                                 </div>
                                             </div>
                                         </div>
+
                                     </c:forEach>
                                     </tbody>
                                 </table>

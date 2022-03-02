@@ -39,6 +39,7 @@ public class MedicalScheduleImpl implements MedicalScheduleService {
 
     @Override
     public List<MedicalSchedule> findByCreatedId(Long id) {
+
         return medicalScheduleDAO.findByCreatedId(id);
     }
 

@@ -38,104 +38,6 @@
 
             <!-- Begin Page Content -->
             <div class="container-fluid">
-
-                <!-- Page Heading -->
-<%--                <div class="d-sm-flex align-items-center justify-content-between mb-4">--%>
-<%--                    <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>--%>
-<%--                    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i--%>
-<%--                            class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>--%>
-<%--                </div>--%>
-
-                <!-- Content Row -->
-<%--                <div class="row">--%>
-
-<%--                    <!-- Earnings (Monthly) Card Example -->--%>
-<%--                    <div class="col-xl-3 col-md-6 mb-4">--%>
-<%--                        <div class="card border-left-primary shadow h-100 py-2">--%>
-<%--                            <div class="card-body">--%>
-<%--                                <div class="row no-gutters align-items-center">--%>
-<%--                                    <div class="col mr-2">--%>
-<%--                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">--%>
-<%--                                            Earnings (Monthly)--%>
-<%--                                        </div>--%>
-<%--                                        <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>--%>
-<%--                                    </div>--%>
-<%--                                    <div class="col-auto">--%>
-<%--                                        <i class="fas fa-calendar fa-2x text-gray-300"></i>--%>
-<%--                                    </div>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-
-<%--                    <!-- Earnings (Monthly) Card Example -->--%>
-<%--                    <div class="col-xl-3 col-md-6 mb-4">--%>
-<%--                        <div class="card border-left-success shadow h-100 py-2">--%>
-<%--                            <div class="card-body">--%>
-<%--                                <div class="row no-gutters align-items-center">--%>
-<%--                                    <div class="col mr-2">--%>
-<%--                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">--%>
-<%--                                            Earnings (Annual)--%>
-<%--                                        </div>--%>
-<%--                                        <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>--%>
-<%--                                    </div>--%>
-<%--                                    <div class="col-auto">--%>
-<%--                                        <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>--%>
-<%--                                    </div>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-
-<%--                    <!-- Earnings (Monthly) Card Example -->--%>
-<%--                    <div class="col-xl-3 col-md-6 mb-4">--%>
-<%--                        <div class="card border-left-info shadow h-100 py-2">--%>
-<%--                            <div class="card-body">--%>
-<%--                                <div class="row no-gutters align-items-center">--%>
-<%--                                    <div class="col mr-2">--%>
-<%--                                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tasks--%>
-<%--                                        </div>--%>
-<%--                                        <div class="row no-gutters align-items-center">--%>
-<%--                                            <div class="col-auto">--%>
-<%--                                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>--%>
-<%--                                            </div>--%>
-<%--                                            <div class="col">--%>
-<%--                                                <div class="progress progress-sm mr-2">--%>
-<%--                                                    <div class="progress-bar bg-info" role="progressbar"--%>
-<%--                                                         style="width: 50%" aria-valuenow="50" aria-valuemin="0"--%>
-<%--                                                         aria-valuemax="100"></div>--%>
-<%--                                                </div>--%>
-<%--                                            </div>--%>
-<%--                                        </div>--%>
-<%--                                    </div>--%>
-<%--                                    <div class="col-auto">--%>
-<%--                                        <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>--%>
-<%--                                    </div>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-
-<%--                    <!-- Pending Requests Card Example -->--%>
-<%--                    <div class="col-xl-3 col-md-6 mb-4">--%>
-<%--                        <div class="card border-left-warning shadow h-100 py-2">--%>
-<%--                            <div class="card-body">--%>
-<%--                                <div class="row no-gutters align-items-center">--%>
-<%--                                    <div class="col mr-2">--%>
-<%--                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">--%>
-<%--                                            Pending Requests--%>
-<%--                                        </div>--%>
-<%--                                        <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>--%>
-<%--                                    </div>--%>
-<%--                                    <div class="col-auto">--%>
-<%--                                        <i class="fas fa-comments fa-2x text-gray-300"></i>--%>
-<%--                                    </div>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-
                 <!-- Content Row -->
                 <div class="row">
                     <!-- Area Chart -->
@@ -181,7 +83,6 @@
                                                 <c:if test="${!schedule.status}"><div style="padding: 5px;background-color: green;border-radius: 5px;color:#ffffff;font-weight: bold">COMPLETED</div></c:if>
                                             </td>
                                             <td>
-                                                <c:url value="/result/add" var="urlResultAdd">
                                                     <c:param name="scheduleId" value="${schedule.id}"/>
                                                 </c:url>
                                                 <c:if test="${schedule.status}"><a type="button" class="btn btn-primary" href="${urlResultAdd}">Create result</a></c:if>
@@ -204,54 +105,11 @@
                                                     </form>
                                                 </c:if>
                                             </td>
-
                                         </tr>
-                                        <div class="modal fade" id="detailSchedule${schedule.id}" tabindex="-1" role="dialog" aria-labelledby="detailSchedule${schedule.id}" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Detail</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <div class="card-body">
-                                                            <div class="row">
-                                                                <p class="card-text" style="text-align: left;font-weight: bold;color: #000000">Id: </p>
-                                                                <p class="card-text" style="text-align: left;margin-left: 10px;color: #000000">${schedule.id}</p>
-                                                            </div>
-                                                            <div class="row" style="width: 300px">
-                                                                <p class="card-text" style="text-align: left;font-weight: bold;color: #000000">Description: </p>
-                                                                <p class="card-text" style="text-align: left;margin-left: 10px;color: #000000;width: 200px">${schedule.description}</p>
-                                                            </div>
-                                                            <div class="row">
-                                                                <p class="card-text" style="text-align: left;font-weight: bold;color: #000000">Type: </p>
-                                                                <p class="card-text" style="text-align: left;margin-left: 10px;color: #000000">
-                                                                    <c:if test="${schedule.type eq 'TEST_COVID'}">Test Covid</c:if>
-                                                                    <c:if test="${schedule.type eq 'HEALTH_CARE'}">Health Care</c:if>
-                                                                </p>
-                                                            </div>
-                                                            <div class="row">
-                                                                <p class="card-text" style="text-align: left;font-weight: bold;color: #000000">Schedule: </p>
-                                                                <p class="card-text" style="text-align: left;margin-left: 10px;color: #000000">
-                                                                    <fmt:formatDate pattern="dd-MM-yyyy HH:mm a" value="${schedule.schedule}"/>
-                                                                </p>
-                                                            </div>
-                                                            <div class="row">
-                                                                <p class="card-text" style="text-align: left;font-weight: bold;color: #000000">Status: </p>
-                                                                <p class="card-text" style="text-align: left;margin-left: 10px;color: #000000">
-                                                                    <c:if test="${schedule.status}">PENDING</c:if>
-                                                                    <c:if test="${!schedule.status}">COMPLETED</c:if></p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+
+
+
                                     </c:forEach>
                                     </tbody>
                                 </table>

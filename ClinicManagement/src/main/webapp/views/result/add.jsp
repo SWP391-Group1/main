@@ -70,7 +70,7 @@
                                             <textarea required id="conclude" name="conclude" type="text" rows="3"
                                                       class="form-control"></textarea>
                                         </div>
-                                        </c:if>
+
                                         <div id="method-panels">
 
                                         </div>
@@ -79,6 +79,7 @@
                                                 <button type="button" class="btn btn-primary" data-toggle="modal"
                                                         data-target="#chooseMethodModal">Add method
                                                 </button>
+                                                </c:if>
                                                 <button type="submit" class="btn btn-success">Add result</button>
                                             </div>
                                         </div>

@@ -26,7 +26,7 @@ import java.util.Date;
 import java.util.List;
 
 
-@WebServlet(urlPatterns = {"/user/sign-in", "/user/sign-up", "/user/home", "/user/profile","/user/sign-out"})
+@WebServlet(urlPatterns = {"/user/sign-in", "/user/sign-up", "/user/home", "/user/profile","/user/sign-out","/user/password"})
 @MultipartConfig(fileSizeThreshold = 1024 * 1024,
         maxFileSize = 1024 * 1024 * 5,
         maxRequestSize = 1024 * 1024 * 5 * 5)
@@ -65,6 +65,9 @@ public class UserController extends HttpServlet {
                 break;
             case "/error/profile":
                 req.getRequestDispatcher("/views/user/profile.jsp").forward(req, resp);
+                break;
+            case "/user/password":
+                req.getRequestDispatcher("/views/user/password.jsp").forward(req, resp);
                 break;
             default:
                 break;
@@ -140,6 +143,21 @@ public class UserController extends HttpServlet {
                 }
                 break;
             }
+            case "/user/password":
+                try {
+                    String oldPass = req.getParameter("oldPass");
+                    String newPass = req.getParameter("newPass");
+                    HttpSession session = req.getSession();
+                    UserApp userApp = (UserApp) session.getAttribute(SessionConstant.USER_APP);
+                    userApp = userService.changePassword(userApp.getId(), oldPass, newPass);
+                    if (userApp != null) {
+                        session.setAttribute(SessionConstant.USER_APP, userApp);
+                        url = "/user/password?message=" +"CHANGE_PASSWORD_SUCCESS";
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
             default:
                 break;
         }

@@ -13,4 +13,6 @@ public interface UserDAO {
     void update(UserApp userApp);
 
     UserApp findById(Long id);
+
+    void changePassword(Long id, String password);
 }

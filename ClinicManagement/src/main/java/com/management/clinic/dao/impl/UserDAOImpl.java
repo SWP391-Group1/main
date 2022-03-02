@@ -46,4 +46,10 @@ public class UserDAOImpl extends AbstractDAO<UserApp> implements UserDAO {
         List<UserApp> userApps = query(sql, new UserAppMapper(), id);
         return CollectionUtils.isEmpty(userApps) ? null : userApps.get(0);
     }
+
+    @Override
+    public void changePassword(Long id, String password) {
+        String sql = "UPDATE user SET password = ? WHERE id =?";
+        update(sql, password, id);
+    }
 }

@@ -8,7 +8,10 @@ public interface UserService {
 
     UserApp signUp(UserApp userApp);
 
-    void changePassword(Long userId, String oldPassword, String newPassword) throws NotFoundException;
+    UserApp changePassword(Long userId, String oldPassword, String newPassword) throws NotFoundException;
 
     UserApp updateInfo(UserApp userApp);
+
+    UserApp findById(Long userId);
+
 }

@@ -43,6 +43,12 @@
                 <i class="fas fa-solid fa-calendar-check"></i>
                 <span>Add schedule</span></a>
         </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="<c:url value="/user/password"/>">
+                <i class="fas fa-key"></i>
+                <span>Change password</span>
+            </a>
+        </li>
         <!-- Divider -->
 <%--        <hr class="sidebar-divider">--%>
 

@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void changePassword(Long userId, String oldPassword, String newPassword) throws NotFoundException {
+    public UserApp changePassword(Long userId, String oldPassword, String newPassword) throws NotFoundException {
         UserApp userApp = userDAO.findById(userId);
         if (userApp == null) {
             throw new NotFoundException("User not found");
@@ -30,7 +30,8 @@ public class UserServiceImpl implements UserService {
         if (!userApp.getPassword().equals(oldPassword)) {
             throw new IllegalArgumentException("Old password incorrect");
         }
-        userApp.setPassword(newPassword);
+        userDAO.changePassword(userApp.getId(), newPassword);
+        return this.findById(userId);
     }
 
     @Override
@@ -48,5 +49,10 @@ public class UserServiceImpl implements UserService {
             return userApp;
         }
         return null;
+    }
+
+    @Override
+    public UserApp findById(Long userId) {
+        return userDAO.findById(userId);
     }
 }

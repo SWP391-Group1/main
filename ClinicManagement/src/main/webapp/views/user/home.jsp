@@ -187,7 +187,7 @@
                                                 <c:if test="${schedule.status}"><a type="button" class="btn btn-primary" href="${urlResultAdd}">Create result</a></c:if>
                                             </td>
                                             <td>
-                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#detailSchedule${schedule.id}">Detail</button>
+                                                <button type="button" class="btn btn-primary">Detail</button>
                                             </td>
                                             <td>
                                                 <c:url var="urlUpdate" value="/schedule/update">
@@ -206,52 +206,7 @@
                                             </td>
 
                                         </tr>
-                                        <div class="modal fade" id="detailSchedule${schedule.id}" tabindex="-1" role="dialog" aria-labelledby="detailSchedule${schedule.id}" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Detail</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <div class="card-body">
-                                                            <div class="row">
-                                                                <p class="card-text" style="text-align: left;font-weight: bold;color: #000000">Id: </p>
-                                                                <p class="card-text" style="text-align: left;margin-left: 10px;color: #000000">${schedule.id}</p>
-                                                            </div>
-                                                            <div class="row" style="width: 300px">
-                                                                <p class="card-text" style="text-align: left;font-weight: bold;color: #000000">Description: </p>
-                                                                <p class="card-text" style="text-align: left;margin-left: 10px;color: #000000;width: 200px">${schedule.description}</p>
-                                                            </div>
-                                                            <div class="row">
-                                                                <p class="card-text" style="text-align: left;font-weight: bold;color: #000000">Type: </p>
-                                                                <p class="card-text" style="text-align: left;margin-left: 10px;color: #000000">
-                                                                    <c:if test="${schedule.type eq 'TEST_COVID'}">Test Covid</c:if>
-                                                                    <c:if test="${schedule.type eq 'HEALTH_CARE'}">Health Care</c:if>
-                                                                </p>
-                                                            </div>
-                                                            <div class="row">
-                                                                <p class="card-text" style="text-align: left;font-weight: bold;color: #000000">Schedule: </p>
-                                                                <p class="card-text" style="text-align: left;margin-left: 10px;color: #000000">
-                                                                    <fmt:formatDate pattern="dd-MM-yyyy HH:mm a" value="${schedule.schedule}"/>
-                                                                </p>
-                                                            </div>
-                                                            <div class="row">
-                                                                <p class="card-text" style="text-align: left;font-weight: bold;color: #000000">Status: </p>
-                                                                <p class="card-text" style="text-align: left;margin-left: 10px;color: #000000">
-                                                                    <c:if test="${schedule.status}">PENDING</c:if>
-                                                                    <c:if test="${!schedule.status}">COMPLETED</c:if></p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                             
                                     </c:forEach>
                                     </tbody>
                                 </table>

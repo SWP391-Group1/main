@@ -106,7 +106,6 @@
                                                 </c:if>
                                             </td>
                                         </tr>
-                                            <div class="modal-dialog" role="document">
 
 
 

@@ -16,7 +16,7 @@ public class HealthNewsDAOImpl extends AbstractDAO<HealthNews> implements Health
         String sql = "INSERT INTO health_news (created_id, title, thumbnail, short_description, content, " +
                 "created_stamp) VALUES (?, ?, ?, ?, ?, ?)";
         return insert(sql, healthNews.getCreatedId(), healthNews.getTitle(), healthNews.getThumbnail(),
-               healthNews.getShortDescription(), healthNews.getContent(), new Date());
+                healthNews.getShortDescription(), healthNews.getContent(), new Date());
     }
 
     @Override
@@ -63,12 +63,13 @@ public class HealthNewsDAOImpl extends AbstractDAO<HealthNews> implements Health
     @Override
     public List<HealthNews> findAll(Pageable pageable) {
         StringBuilder sql = new StringBuilder("SELECT * FROM health_news");
-        if (pageable.getSorter() != null && StringUtils.isNotBlank(pageable.getSorter().getSortName())
-                && StringUtils.isNotBlank(pageable.getSorter().getSortBy())) {
+        if (pageable.getSorter() != null &&
+                StringUtils.isNotBlank(pageable.getSorter().getSortName()) &&
+                StringUtils.isNotBlank(pageable.getSorter().getSortBy())) {
             sql.append(" ORDER BY " + pageable.getSorter().getSortName() + " " + pageable.getSorter().getSortBy());
         }
         if (pageable.getOffset() != null && pageable.getLimit() != null) {
-            sql.append(" LIMIT " + pageable.getOffset() + ", " + pageable.getLimit());
+            sql.append(" LIMIT " + pageable.getLimit() + " OFFSET " + pageable.getOffset());
         }
         return query(sql.toString(), new HealthNewsMapper());
     }

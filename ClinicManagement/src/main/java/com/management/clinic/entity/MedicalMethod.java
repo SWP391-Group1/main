@@ -17,6 +17,7 @@ public class MedicalMethod implements Serializable {
     private Long id;
     private Long resultId;
     private String name;
+    private String image;
     private String type;
     private String diagnosis;
     private String conclude;

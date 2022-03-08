@@ -39,7 +39,6 @@ public class MedicalScheduleImpl implements MedicalScheduleService {
 
     @Override
     public List<MedicalSchedule> findByCreatedId(Long id) {
-
         return medicalScheduleDAO.findByCreatedId(id);
     }
 
@@ -49,10 +48,10 @@ public class MedicalScheduleImpl implements MedicalScheduleService {
     }
 
     @Override
-    public MedicalSchedule buildDataCreate(HttpServletRequest req) throws Exception{
-        HttpSession session= req.getSession();
-        UserApp userApp= (UserApp) session.getAttribute(SessionConstant.USER_APP);
-        String schedule=req.getParameter("schedule");
+    public MedicalSchedule buildDataCreate(HttpServletRequest req) throws Exception {
+        HttpSession session = req.getSession();
+        UserApp userApp = (UserApp) session.getAttribute(SessionConstant.USER_APP);
+        String schedule = req.getParameter("schedule");
         Date scheduleDate = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm").parse(schedule);
         return MedicalSchedule.builder()
                 .createdId(userApp.getId())
@@ -61,16 +60,17 @@ public class MedicalScheduleImpl implements MedicalScheduleService {
                 .schedule(scheduleDate)
                 .build();
     }
+
     @Override
     public MedicalSchedule buildDataUpdate(HttpServletRequest req) throws Exception {
-        String schedule=req.getParameter("schedule");
+        String schedule = req.getParameter("schedule");
 
-        String id=req.getParameter("id");
-        MedicalSchedule medicalSchedule= findById(Long.parseLong(id));
+        String id = req.getParameter("id");
+        MedicalSchedule medicalSchedule = findById(Long.parseLong(id));
         medicalSchedule.setType(req.getParameter("type"));
         medicalSchedule.setDescription(req.getParameter("description"));
 
-        if(schedule!=null&&!schedule.isEmpty()){
+        if (schedule != null && !schedule.isEmpty()) {
             Date scheduleDate = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm").parse(schedule);
             medicalSchedule.setSchedule(scheduleDate);
         }
@@ -80,5 +80,10 @@ public class MedicalScheduleImpl implements MedicalScheduleService {
     @Override
     public void updateStatus(Long scheduleId, Boolean status) {
         medicalScheduleDAO.updateStatus(scheduleId, status);
+    }
+
+    @Override
+    public List<MedicalSchedule> findAll() {
+        return medicalScheduleDAO.findAll();
     }
 }

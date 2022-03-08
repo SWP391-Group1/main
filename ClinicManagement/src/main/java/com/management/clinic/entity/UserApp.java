@@ -18,6 +18,7 @@ import java.util.List;
 public class UserApp implements Serializable {
 
     private Long id;
+    private Long roleId;
     private String cardId;
     private String firstName;
     private String lastName;
@@ -31,5 +32,7 @@ public class UserApp implements Serializable {
     private Boolean status;
     private Date createdStamp;
     private Date modifiedStamp;
+    private String roleName;
+    private RoleApp roleApp;
     private List<RoleApp> roleApps = new ArrayList<>();
 }

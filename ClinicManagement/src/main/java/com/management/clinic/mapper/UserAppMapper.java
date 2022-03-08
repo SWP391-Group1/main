@@ -1,5 +1,6 @@
 package com.management.clinic.mapper;
 
+import com.management.clinic.entity.RoleApp;
 import com.management.clinic.entity.UserApp;
 
 import java.sql.ResultSet;
@@ -24,11 +25,20 @@ public class UserAppMapper implements RowMapper<UserApp> {
             userApp.setStatus(rs.getBoolean("status"));
             userApp.setCreatedStamp(rs.getDate("created_stamp"));
             userApp.setModifiedStamp(rs.getDate("modified_stamp"));
-
-//            RoleApp roleApp = new RoleApp();
-//            roleApp.setId(rs.getLong("roleId"));
-//            roleApp.setName(rs.getString("name"));
-
+            RoleApp roleApp = new RoleApp();
+            try {
+                if (rs.getLong("role_id") > 0) {
+                    roleApp.setId(rs.getLong("role_id"));
+                }
+                roleApp.setName(rs.getString("name"));
+            } catch (Exception e) {
+                // ignore ex
+            }
+            if (roleApp != null) {
+                userApp.setRoleApp(roleApp);
+                userApp.setRoleId(roleApp.getId());
+                userApp.setRoleName(roleApp.getName());
+            }
             return userApp;
         } catch (SQLException e) {
             e.printStackTrace();

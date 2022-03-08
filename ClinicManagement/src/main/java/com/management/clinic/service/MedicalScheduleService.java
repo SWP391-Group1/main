@@ -22,4 +22,6 @@ public interface MedicalScheduleService {
     MedicalSchedule buildDataUpdate(HttpServletRequest req) throws Exception;
 
     void updateStatus(Long scheduleId, Boolean status);
+
+    List<MedicalSchedule> findAll();
 }

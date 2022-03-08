@@ -3,6 +3,7 @@ USE `clinic_system`;
 
 CREATE TABLE IF NOT EXISTS `user` (
 	`id` BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	`role_id` BIGINT NOT NULL,
     `card_id` VARCHAR(50) NOT NULL,
     `first_name` NVARCHAR(50) NOT NULL,
     `last_name` NVARCHAR(50) NOT NULL,
@@ -21,12 +22,6 @@ CREATE TABLE IF NOT EXISTS `user` (
 CREATE TABLE IF NOT EXISTS `role` (
 	`id` BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `name` VARCHAR (30) NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS `user_roles` (
-	`id` BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    `user_id` BIGINT NOT NULL,
-    `role_id` BIGINT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS `medical_schedule` (
@@ -67,17 +62,16 @@ CREATE TABLE IF NOT EXISTS `medical_method` (
 CREATE TABLE IF NOT EXISTS `health_news` (
 	`id` BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	`created_id` BIGINT NOT NULL,
-    `title` NVARCHAR(255) NOT NULL,
-    `description` NVARCHAR(255) NOT NULL,
-    `image` NVARCHAR(255) NOT NULL,
+    `title` TEXT NOT NULL,
+    `thumbnail` NVARCHAR(255) NOT NULL,
+    `short_description` TEXT NOT NULL,
+    `content` TEXT NOT NULL,
     `created_stamp` DATETIME,
     `modified_stamp` DATETIME
 );
 
-ALTER TABLE `user_roles`
-    ADD CONSTRAINT fk_user_roles_user FOREIGN KEY (user_id) REFERENCES `user` (id); 
-ALTER TABLE `user_roles`
-    ADD CONSTRAINT fk_user_roles_role FOREIGN KEY (role_id) REFERENCES `role` (id); 
+ALTER TABLE `user`
+    ADD CONSTRAINT fk_user_role FOREIGN KEY (role_id) REFERENCES `role` (id); 
 ALTER TABLE `medical_schedule`
     ADD CONSTRAINT fk_medical_schedule_user FOREIGN KEY (created_id) REFERENCES `user` (id);
 ALTER TABLE `medical_result`

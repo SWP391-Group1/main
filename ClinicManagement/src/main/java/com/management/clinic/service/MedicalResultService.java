@@ -14,6 +14,8 @@ public interface MedicalResultService {
 
     MedicalResult findById(Long id);
 
+    MedicalResult findByScheduleId(Long id);
+
     boolean delete(Long id);
 
     MedicalResult buildData(HttpServletRequest req);

@@ -1,7 +1,7 @@
 package com.management.clinic.controller;
 
+import com.management.clinic.constants.Constant;
 import com.management.clinic.constants.SessionConstant;
-import com.management.clinic.entity.MedicalResult;
 import com.management.clinic.entity.MedicalSchedule;
 import com.management.clinic.entity.UserApp;
 import com.management.clinic.service.MedicalScheduleService;
@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(urlPatterns = {"/schedule/add", "/schedule/update", "/schedule/delete","/schedule/table", "/schedule"})
+@WebServlet(urlPatterns = {"/schedule/add", "/schedule/update", "/schedule/delete", "/schedule/table", "/schedule"})
 public class MedicalScheduleController extends HttpServlet {
 
     @Inject
@@ -25,11 +25,16 @@ public class MedicalScheduleController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         switch (req.getServletPath()) {
-            case "/schedule/table":{
-                HttpSession session=req.getSession();
-                UserApp userApp= (UserApp) session.getAttribute(SessionConstant.USER_APP);
-                List<MedicalSchedule> medicalScheduleList=  scheduleService.findByCreatedId(userApp.getId());
-                req.setAttribute("medicalScheduleList",medicalScheduleList);
+            case "/schedule/table": {
+                HttpSession session = req.getSession();
+                UserApp userApp = (UserApp) session.getAttribute(SessionConstant.USER_APP);
+                List<MedicalSchedule> medicalScheduleList;
+                if (userApp.getRoleName().equals(Constant.ROLE_PATIENT)) {
+                    medicalScheduleList = scheduleService.findByCreatedId(userApp.getId());
+                } else {
+                    medicalScheduleList = scheduleService.findAll();
+                }
+                req.setAttribute("medicalScheduleList", medicalScheduleList);
                 req.getRequestDispatcher("/views/schedule/table.jsp").forward(req, resp);
                 break;
             }
@@ -37,9 +42,9 @@ public class MedicalScheduleController extends HttpServlet {
                 req.getRequestDispatcher("/views/schedule/add.jsp").forward(req, resp);
                 break;
             case "/schedule/update":
-                String scheduleId=req.getParameter("id");
-                MedicalSchedule medicalSchedule= scheduleService.findById(Long.parseLong(scheduleId));
-                req.setAttribute("medicalSchedule",medicalSchedule);
+                String scheduleId = req.getParameter("id");
+                MedicalSchedule medicalSchedule = scheduleService.findById(Long.parseLong(scheduleId));
+                req.setAttribute("medicalSchedule", medicalSchedule);
                 req.getRequestDispatcher("/views/schedule/update.jsp").forward(req, resp);
                 break;
             default:
@@ -55,7 +60,7 @@ public class MedicalScheduleController extends HttpServlet {
                 try {
                     MedicalSchedule schedule = scheduleService.buildDataCreate(req);
                     scheduleService.save(schedule);
-                    resp.sendRedirect("/user/home");
+                    resp.sendRedirect("/schedule/table");
                     return;
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -77,7 +82,7 @@ public class MedicalScheduleController extends HttpServlet {
             case "/schedule/delete": {
                 try {
                     scheduleService.delete(Long.parseLong(req.getParameter("id")));
-                    resp.sendRedirect("/user/home");
+                    resp.sendRedirect("/schedule/table");
                     return;
                 } catch (Exception e) {
                     e.printStackTrace();

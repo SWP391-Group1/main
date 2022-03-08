@@ -40,6 +40,11 @@ public class MedicalResultServiceImpl implements MedicalResultService {
     }
 
     @Override
+    public MedicalResult findByScheduleId(Long id) {
+        return medicalResultDAO.findByScheduleId(id);
+    }
+
+    @Override
     public boolean delete(Long id) {
         try {
             return medicalResultDAO.delete(id);
@@ -85,8 +90,8 @@ public class MedicalResultServiceImpl implements MedicalResultService {
                     MedicalMethod medicalResult = MedicalMethod.builder()
                             .diagnosis(req.getParameterValues("diagnosis")[i])
                             .conclude(req.getParameterValues("conclude")[i])
-                            .name(req.getParameterValues("type")[i-1])
-                            .type(req.getParameterValues("type")[i-1])
+                            .name(req.getParameterValues("type")[i - 1])
+                            .type(req.getParameterValues("type")[i - 1])
                             .build();
                     medicalMethods.add(medicalResult);
                 }

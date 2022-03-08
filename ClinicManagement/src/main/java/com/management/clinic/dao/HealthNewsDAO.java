@@ -1,7 +1,5 @@
 package com.management.clinic.dao;
 
-
-
 import com.management.clinic.entity.HealthNews;
 import com.management.clinic.paging.Pageable;
 

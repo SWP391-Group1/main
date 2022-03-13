@@ -26,4 +26,6 @@ public interface UserDAO {
     void changePassword(Long id, String password);
 
     List<UserApp> getAllUserMember();
+
+    List<UserApp> findUserByRoleName(String roleName);
 }

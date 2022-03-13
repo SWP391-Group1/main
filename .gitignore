@@ -158,3 +158,6 @@ nbdist/
 # End of https://www.toptal.com/developers/gitignore/api/java,intellij,netbeans
 >>>>>>> origin/dev
 1
+ClinicManagement/.idea/checkstyle-idea.xml
+ClinicManagement/.idea/jpa-buddy.xml
+ClinicManagement/.idea/misc.xml

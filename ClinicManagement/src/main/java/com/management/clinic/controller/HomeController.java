@@ -30,8 +30,8 @@ public class HomeController extends HttpServlet {
                                 ? 1 : Integer.parseInt(req.getParameter("page")))
                         .maxPageItem(StringUtils.isBlank(req.getParameter("maxPageItem"))
                                 ? 4 : Integer.parseInt(req.getParameter("maxPageItem")))
-                        .sortName(req.getParameter("sortName"))
-                        .sortBy(req.getParameter("sortBy"))
+                        .sortName(!StringUtils.isBlank(req.getParameter("sortName")) ? req.getParameter("sortName") : "created_stamp")
+                        .sortBy(!StringUtils.isBlank(req.getParameter("sortBy")) ? req.getParameter("sortBy") : "DESC")
                         .build();
                 Pageable pageable = new PageRequest(model.getPage(), model.getMaxPageItem(), new Sorter(model.getSortName(), model.getSortBy()));
                 model.setListResult(healthNewsService.findAll(pageable));

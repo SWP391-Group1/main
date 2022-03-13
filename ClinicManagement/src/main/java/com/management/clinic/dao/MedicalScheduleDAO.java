@@ -18,5 +18,5 @@ public interface MedicalScheduleDAO {
 
     List<MedicalSchedule> findAll();
 
-    void updateStatus(Long scheduleId, Boolean status);
+    void updateStatus(Long scheduleId, String status);
 }

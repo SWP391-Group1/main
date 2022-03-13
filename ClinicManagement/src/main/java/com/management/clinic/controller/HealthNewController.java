@@ -58,7 +58,6 @@ public class HealthNewController extends HttpServlet {
                 }else{
                     req.getRequestDispatcher("/views/health-news/detail.jsp").forward(req, resp);
                 }
-
                 break;
             default:
                 break;
@@ -75,7 +74,10 @@ public class HealthNewController extends HttpServlet {
 
                 if (healthNews != null && healthNews.getId() != null) {
                     // Handle when update thumbnail
-
+                    String src = FileUtil.getUploadImage(req, serverPath);
+                    if (src != null && !src.isEmpty()) {
+                        healthNews.setThumbnail(src);
+                    }
                     //
                     healthNewsService.update(healthNews);
                 } else {

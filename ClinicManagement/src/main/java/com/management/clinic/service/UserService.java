@@ -20,4 +20,6 @@ public interface UserService {
     UserApp findById(Long userId);
 
     List<UserApp> getAllUserMember();
+
+    List<UserApp> getUserMember(String type);
 }

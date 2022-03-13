@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `medical_schedule` (
     `description` NVARCHAR(255) NOT NULL,
     `type` VARCHAR(50) NOT NULL,
     `schedule` DATETIME NOT NULL,
-    `status` BOOLEAN NOT NULL,
+    `status` VARCHAR(50) NOT NULL,
     `created_stamp` DATETIME,
     `modified_stamp` DATETIME
 );
@@ -84,3 +84,7 @@ ALTER TABLE `medical_method`
     ADD CONSTRAINT fk_medical_method_result FOREIGN KEY (result_id) REFERENCES `medical_result` (id);
 ALTER TABLE `medical_result`
     ADD CONSTRAINT fk_medical_result_schedule FOREIGN KEY (schedule_id) REFERENCES `medical_schedule` (id);
+    
+INSERT INTO role (name) VALUES ('ADMIN');
+INSERT INTO role (name) VALUES ('DOCTOR'); 
+INSERT INTO role (name) VALUES ('RECEPTIONIST'); 

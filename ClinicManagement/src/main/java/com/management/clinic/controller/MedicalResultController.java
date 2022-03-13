@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-@WebServlet(urlPatterns = {"/result/add", "/result/update", "/result/delete", "/result/view"})
+@WebServlet(urlPatterns = {"/result/add", "/result/view"})
 @MultipartConfig(fileSizeThreshold = 1024 * 1024,
         maxFileSize = 1024 * 1024 * 5,
         maxRequestSize = 1024 * 1024 * 5 * 5)
@@ -89,20 +89,6 @@ public class MedicalResultController extends HttpServlet {
                             }
                         }
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                break;
-            case "/result/update":
-//                try {
-//                    resultService.update(result);
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-                break;
-            case "/result/delete":
-                try {
-                    resultService.delete(Long.parseLong(req.getParameter("id")));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

@@ -80,4 +80,10 @@ public class UserDAOImpl extends AbstractDAO<UserApp> implements UserDAO {
         String sql = "SELECT * FROM user u JOIN role r ON u.role_id=r.id and r.name != 'ADMIN'";
         return query(sql, new UserAppMapper());
     }
+
+    @Override
+    public List<UserApp> findUserByRoleName(String roleName) {
+        String sql = "SELECT * FROM user u JOIN role r ON u.role_id=r.id and r.name = ?";
+        return query(sql, new UserAppMapper(), roleName);
+    }
 }

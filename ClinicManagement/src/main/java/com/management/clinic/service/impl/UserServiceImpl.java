@@ -6,6 +6,7 @@ import com.management.clinic.entity.RoleApp;
 import com.management.clinic.entity.UserApp;
 import com.management.clinic.service.UserService;
 import javassist.NotFoundException;
+import org.apache.commons.lang.StringUtils;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -114,7 +115,15 @@ public class UserServiceImpl implements UserService {
         return userDAO.findById(userId);
     }
 
-    public List<UserApp> getAllUserMember(){
+    public List<UserApp> getAllUserMember() {
         return userDAO.getAllUserMember();
+    }
+
+    @Override
+    public List<UserApp> getUserMember(String type) {
+        if (!StringUtils.isBlank(type) && !type.equalsIgnoreCase("ALL")) {
+            return userDAO.findUserByRoleName(type);
+        }
+        return this.getAllUserMember();
     }
 }

@@ -18,7 +18,7 @@ public class MedicalScheduleMapper implements RowMapper<MedicalSchedule> {
             medicalSchedule.setCreatedStamp(rs.getDate("created_stamp"));
             medicalSchedule.setModifiedStamp(rs.getDate("modified_stamp"));
             medicalSchedule.setCreatedId(rs.getLong("created_id"));
-            medicalSchedule.setStatus(rs.getBoolean("status"));
+            medicalSchedule.setStatus(rs.getString("status"));
             return medicalSchedule;
         } catch (SQLException e) {
             return null;

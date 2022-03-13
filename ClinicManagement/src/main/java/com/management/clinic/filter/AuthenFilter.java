@@ -32,6 +32,8 @@ public class AuthenFilter implements Filter {
                     || uri.contains("sign-up")
                     || uri.equalsIgnoreCase("/home")
                     || uri.contains("/news/details")
+                    || uri.startsWith("/static/image/")
+                    || uri.equalsIgnoreCase("/")
             ) {
                 chain.doFilter(request, response);
                 return;

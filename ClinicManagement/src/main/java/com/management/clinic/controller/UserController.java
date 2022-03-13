@@ -83,8 +83,10 @@ public class UserController extends HttpServlet {
                 req.getRequestDispatcher("/views/user/password.jsp").forward(req, resp);
                 break;
             case "/user/member":{
-                List<UserApp> members=userService.getAllUserMember();
+                String type = req.getParameter("type");
+                List<UserApp> members=userService.getUserMember(type);
                 req.setAttribute("members",members);
+                req.setAttribute("type",type);
                 req.getRequestDispatcher("/views/user/members.jsp").forward(req, resp);
                 break;
             }

@@ -4,6 +4,7 @@ import com.management.clinic.entity.MedicalMethod;
 import com.management.clinic.entity.MedicalResult;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
 import java.util.List;
 
 public interface MedicalResultService {
@@ -20,7 +21,7 @@ public interface MedicalResultService {
 
     MedicalResult buildData(HttpServletRequest req);
 
-    MedicalResult buildMedicalResultAdd(HttpServletRequest req);
+    MedicalResult buildMedicalResultAdd(HttpServletRequest req) throws ParseException;
 
     List<MedicalMethod> buildListMedicalMethodAdd(HttpServletRequest req);
 }

@@ -21,6 +21,9 @@
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
 
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -59,6 +62,44 @@
                                         <a href="<c:url value='/schedule/add'/>" type="button" class="btn btn-success">Add
                                             Schedule</a>
                                     </c:if>
+                                    <form method="GET" action="/schedule/table" onsubmit="return validateSearch()">
+                                        <div style="display: flex; float: right;">
+                                            <div style="float: right">
+                                                <div style="display: flex; ">
+                                                    <div>
+                                                        <form method="GET" action="<c:url value='/user/member'/>">
+                                                            <select id="status" name="status"
+                                                                    class="form-control"
+                                                                    style="width: 50px; float: right;"
+                                                                    onchange="this.form.submit()">
+                                                                <option <c:if test="${requestScope.status eq 'HANDLE'}">selected</c:if> value="HANDLE">HANDLE</option>
+                                                                <option <c:if test="${requestScope.status eq 'PENDING'}">selected</c:if> value="PENDING">PENDING</option>
+                                                                <option <c:if test="${requestScope.status eq 'APPROVED'}">selected</c:if> value="APPROVED">APPROVED</option>
+                                                                <option <c:if test="${requestScope.status eq 'COMPLETED'}">selected</c:if> value="COMPLETED">COMPLETED</option>
+                                                                <option <c:if test="${requestScope.status eq 'REJECTED'}">selected</c:if> value="REJECTED">REJECTED</option>
+                                                            </select>
+                                                        </form>
+                                                    </div>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                                    From &ensp;
+                                                    <input id="fromTime" name="fromTime"
+                                                           onchange="validateFromTime()"
+                                                           type="datetime-local"/>
+                                                    <p style="color: red" id="dateMessageFromTime"></p>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;To &ensp;
+                                                    <input id="toTime" name="toTime"
+                                                           onchange="validateToTime()"
+                                                           value="${toTime}"
+                                                           type="datetime-local"/>
+                                                    <p style="color: red" id="dateMessageToTime"></p>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <button class="btn-secondary btn btn-search" type="submit"><i
+                                                            class="fa fa-search fa-fw"></i> Search
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
                                 <table class="table">
                                     <thead>
@@ -68,6 +109,7 @@
                                         <th>Type</th>
                                         <th>Schedule</th>
                                         <th>Status</th>
+                                        <th></th>
                                         <th></th>
                                         <th></th>
                                         <th></th>
@@ -89,14 +131,24 @@
                                             <td><fmt:formatDate pattern="dd-MM-yyyy HH:mm a"
                                                                 value="${schedule.schedule}"/></td>
                                             <td>
-                                                <c:if test="${schedule.status}">
+                                                <c:if test="${schedule.status eq 'PENDING'}">
                                                     <div style="font-size: 12px;text-align: center;padding: 2px;background-color: orange;border-radius: 3px;color:#ffffff;font-weight: bold">
                                                         PENDING
                                                     </div>
                                                 </c:if>
-                                                <c:if test="${!schedule.status}">
+                                                <c:if test="${schedule.status eq 'APPROVED'}">
+                                                    <div style="font-size: 12px;text-align: center;padding: 2px;background-color: green;border-radius: 3px;color:#ffffff;font-weight: bold">
+                                                        APPROVED
+                                                    </div>
+                                                </c:if>
+                                                <c:if test="${schedule.status eq 'COMPLETED'}">
                                                     <div style="font-size: 12px;text-align: center;padding: 2px;background-color: green;border-radius: 3px;color:#ffffff;font-weight: bold">
                                                         COMPLETED
+                                                    </div>
+                                                </c:if>
+                                                <c:if test="${schedule.status eq 'REJECTED'}">
+                                                    <div style="font-size: 12px;text-align: center;padding: 2px;background-color: red;border-radius: 3px;color:#ffffff;font-weight: bold">
+                                                        REJECTED
                                                     </div>
                                                 </c:if>
                                             </td>
@@ -108,36 +160,66 @@
                                                 <c:url value="/result/view" var="urlResultView">
                                                     <c:param name="scheduleId" value="${schedule.id}"/>
                                                 </c:url>
-                                                <c:if test="${schedule.status and (sessionScope.USER_ROLE eq 'DOCTOR')}"><a
+                                                <c:if test="${schedule.status eq 'APPROVED' and (sessionScope.USER_ROLE eq 'DOCTOR')}"><a
                                                         type="button"
                                                         style="background-color: #93c975;color: #ffffff"
                                                         class="btn"
                                                         href="${urlResultAdd}">Create
                                                     result</a></c:if>
-                                                <c:if test="${!schedule.status}"><a type="button"
-                                                                                    style="background-color: #66aede;color: #ffffff"
-                                                                                    class="btn"
-                                                                                    href="${urlResultView}">View
+                                                <c:if test="${schedule.status eq 'COMPLETED'}"><a type="button"
+                                                                                                  style="background-color: #66aede;color: #ffffff"
+                                                                                                  class="btn"
+                                                                                                  href="${urlResultView}">View
                                                     result</a></c:if>
+                                            </td>
+                                            <td>
+                                                <c:if test="${sessionScope.USER_ROLE eq 'RECEPTIONIST'}">
+                                                    <c:if test="${schedule.status eq 'PENDING'}">
+                                                        <div style="display: flex">
+                                                            <form action="<c:url value='/schedule/approve'/>" method="POST">
+                                                                <input name="id" hidden value="${schedule.id}"/>
+                                                                <button type="submit" class="btn btn-success">
+                                                                    Approve
+                                                                </button>
+                                                            </form>
+                                                            &nbsp;&nbsp;
+                                                            <form action="<c:url value='/schedule/reject'/>" method="POST">
+                                                                <input name="id" hidden value="${schedule.id}"/>
+                                                                <button type="submit" class="btn btn-danger">
+                                                                    Reject
+                                                                </button>
+                                                            </form>
+                                                            &nbsp;&nbsp;
+                                                            <form action="<c:url value='/schedule/update'/>" method="GET">
+                                                                <input name="id" hidden value="${schedule.id}"/>
+                                                                <button type="submit" class="btn btn-warning">
+                                                                    Update
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                    </c:if>
+                                                </c:if>
                                             </td>
                                             <td>
                                                 <button type="button" class="btn btn-primary" data-toggle="modal"
                                                         data-target="#detailSchedule${schedule.id}">Detail
                                                 </button>
                                             </td>
-                                                <%--                                            <td>--%>
-                                                <%--                                                <c:url var="urlUpdate" value="/schedule/update">--%>
-                                                <%--                                                    <c:param name="id" value="${schedule.id}"/>--%>
-                                                <%--                                                </c:url>--%>
-                                                <%--                                                <a type="button" class="btn btn-warning" href="${urlUpdate}">Update</a>--%>
-                                                <%--                                            </td>--%>
-
                                             <td>
                                                 <c:if test="${sessionScope.USER_ROLE eq 'PATIENT'}">
-                                                    <form action="<c:url value='/schedule/delete'/>" method="POST">
-                                                        <input name="id" hidden value="${schedule.id}"/>
-                                                        <button type="submit" class="btn btn-danger">Delete</button>
-                                                    </form>
+                                                    <c:if test="${schedule.status eq 'PENDING'}">
+                                                        <div style="display: flex">
+                                                            <form action="<c:url value='/schedule/update'/>" method="GET">
+                                                                <input name="id" hidden value="${schedule.id}"/>
+                                                                <button type="submit" class="btn btn-warning">Update</button>
+                                                            </form>
+                                                            &nbsp;
+                                                            <form action="<c:url value='/schedule/delete'/>" method="POST">
+                                                                <input name="id" hidden value="${schedule.id}"/>
+                                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                                            </form>
+                                                        </div>
+                                                    </c:if>
                                                 </c:if>
                                             </td>
 
@@ -196,8 +278,26 @@
                                                                     Status: </p>
                                                                 <p class="card-text"
                                                                    style="text-align: left;margin-left: 10px;color: #000000">
-                                                                    <c:if test="${schedule.status}">PENDING</c:if>
-                                                                    <c:if test="${!schedule.status}">COMPLETED</c:if></p>
+                                                                    <c:if test="${schedule.status eq 'PENDING'}">PENDING</c:if>
+                                                                    <c:if test="${schedule.status eq 'APPROVED'}">APPROVED</c:if>
+                                                                    <c:if test="${schedule.status eq 'COMPLETED'}">COMPLETED</c:if></p>
+                                                                    <c:if test="${schedule.status eq 'REJECTED'}">REJECTED</c:if></p>
+                                                            </div>
+                                                            <div class="row">
+                                                                <p class="card-text"
+                                                                   style="text-align: left;font-weight: bold;color: #000000">
+                                                                    Patient name: </p>
+                                                                <p class="card-text"
+                                                                   style="text-align: left;margin-left: 10px;color: #000000">
+                                                                    ${schedule.patientName}</p>
+                                                            </div>
+                                                            <div class="row">
+                                                                <p class="card-text"
+                                                                   style="text-align: left;font-weight: bold;color: #000000">
+                                                                    Patient phone number: </p>
+                                                                <p class="card-text"
+                                                                   style="text-align: left;margin-left: 10px;color: #000000">
+                                                                        ${schedule.patientPhone}</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -242,7 +342,58 @@
 <!-- Page level custom scripts -->
 <script src="js/demo/chart-area-demo.js"></script>
 <script src="js/demo/chart-pie-demo.js"></script>
+<script type="text/javascript">
 
+    function validateSearch() {
+        console.log("Start validate search");
+        var dateTimeStr = document.getElementById("fromTime").value;
+        var dateTimeStrToTime = document.getElementById("toTime").value;
+        var dateTimeToTime = convertDateToUTC(new Date(dateTimeStrToTime));
+        var dateTime = convertDateToUTC(new Date(dateTimeStr));
+        if (!isNaN(dateTimeToTime) && !isNaN(dateTime)) {
+            console.log("From: " + validateFromTime());
+            validateFromTime();
+            console.log("From: " + validateToTime());
+            validateToTime();
+        }
+        return true;
+    }
+
+    function validateFromTime() {
+        var dateTimeStr = document.getElementById("fromTime").value;
+        var dateTimeStrToTime = document.getElementById("toTime").value;
+        var dateTimeToTime = convertDateToUTC(new Date(dateTimeStrToTime));
+        var dateTime = convertDateToUTC(new Date(dateTimeStr));
+        if (!isNaN(dateTimeToTime.getTime()) && !isNaN(dateTime.getTime()) && dateTimeToTime < dateTime) {
+            document.getElementById("dateMessageFromTime").innerHTML = "Please select a from date before to date";
+            return false;
+        } else {
+            document.getElementById("dateMessageFromTime").innerHTML = "";
+            document.getElementById("dateMessageToTime").innerHTML = "";
+        }
+        return true;
+    }
+
+    function validateToTime() {
+        var dateTimeStr = document.getElementById("fromTime").value;
+        var dateTimeStrToTime = document.getElementById("toTime").value;
+        var dateTime = convertDateToUTC(new Date(dateTimeStr));
+        var dateTimeToTime = convertDateToUTC(new Date(dateTimeStrToTime));
+        if (!isNaN(dateTime.getTime()) && !isNaN(dateTimeToTime.getTime()) && dateTimeToTime < dateTime) {
+            document.getElementById("dateMessageToTime").innerHTML
+                = "Please select a to date after from date";
+            return false;
+        } else {
+            document.getElementById("dateMessageFromTime").innerHTML = "";
+            document.getElementById("dateMessageToTime").innerHTML = "";
+        }
+        return true;
+    }
+
+    function convertDateToUTC(date) {
+        return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
+    }
+</script>
 </body>
 
 </html>

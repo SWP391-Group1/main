@@ -21,6 +21,9 @@
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
 
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -48,7 +51,6 @@
             <!-- Begin Page Content -->
             <div class="container-fluid">
                 <div class="row">
-                    <!-- Area Chart -->
                     <div class="col-xl-12 col-lg-12">
                         <div class="card shadow mb-4">
                             <!-- Card Body -->
@@ -59,7 +61,7 @@
                                         <a href="<c:url value='/schedule/add'/>" type="button" class="btn btn-success">Add
                                             Schedule</a>
                                     </c:if>
-                                    <form method="GET" action="/schedule/table" onsubmit="return validateSearch()">
+                                    <form class="form-inline" method="GET" action="/schedule/table" onsubmit="return validateSearch()">
                                         <div style="display: flex; float: right;">
                                             <div style="float: right">
                                                 <div style="display: flex; ">
@@ -67,7 +69,7 @@
                                                         <form method="GET" action="<c:url value='/user/member'/>">
                                                             <select id="status" name="status"
                                                                     class="form-control"
-                                                                    style="width: 500px; float: right;"
+                                                                    style="float: right;"
                                                                     onchange="this.form.submit()">
                                                                 <option <c:if test="${requestScope.status eq 'HANDLE'}">selected</c:if> value="HANDLE">HANDLE</option>
                                                                 <option <c:if test="${requestScope.status eq 'PENDING'}">selected</c:if> value="PENDING">PENDING</option>
@@ -77,19 +79,26 @@
                                                             </select>
                                                         </form>
                                                     </div>
-                                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                                    From &ensp;
-                                                    <input id="fromTime" name="fromTime"
-                                                           onchange="validateFromTime()"
-                                                           type="datetime-local"/>
+                                                    <div class="input-group mb-2 mr-sm-2">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">From</div>
+                                                        </div>
+                                                        <input class="form-control" id="fromTime" name="fromTime"
+                                                               onchange="validateFromTime()"
+                                                               type="datetime-local"/>
+                                                    </div>
                                                     <p style="color: red" id="dateMessageFromTime"></p>
-                                                    &nbsp;&nbsp;&nbsp;&nbsp;To &ensp;
-                                                    <input id="toTime" name="toTime"
-                                                           onchange="validateToTime()"
-                                                           value="${toTime}"
-                                                           type="datetime-local"/>
+
+                                                    <div class="input-group mb-2 mr-sm-2">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">To</div>
+                                                        </div>
+                                                        <input class="form-control" id="toTime" name="toTime"
+                                                               onchange="validateToTime()"
+                                                               value="${toTime}"
+                                                               type="datetime-local"/>
+                                                    </div>
                                                     <p style="color: red" id="dateMessageToTime"></p>
-                                                    &nbsp;&nbsp;&nbsp;&nbsp;
                                                     <button class="btn-secondary btn btn-search" type="submit"><i
                                                             class="fa fa-search fa-fw"></i> Search
                                                     </button>

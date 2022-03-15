@@ -13,9 +13,9 @@ import java.util.List;
 public class MedicalMethodDAOImpl extends AbstractDAO<MedicalMethod> implements MedicalMethodDAO {
     @Override
     public Long save(MedicalMethod medicalMethod) {
-        String sql = "INSERT INTO medical_method (result_id, name, diagnosis, conclude, created_stamp)" +
-                " VALUES (?, ?, ?, ?, ?)";
-        return insert(sql, medicalMethod.getResultId(), medicalMethod.getName(),
+        String sql = "INSERT INTO medical_method (result_id, name, image, diagnosis, conclude, created_stamp) " +
+                " VALUES (?, ?, ?, ?, ?, ?)";
+        return insert(sql, medicalMethod.getResultId(), medicalMethod.getName(), medicalMethod.getImage(),
                 medicalMethod.getDiagnosis(), medicalMethod.getConclude(), new Date());
     }
 

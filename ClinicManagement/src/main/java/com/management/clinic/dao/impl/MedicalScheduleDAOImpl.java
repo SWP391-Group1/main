@@ -1,5 +1,6 @@
 package com.management.clinic.dao.impl;
 
+import com.management.clinic.constants.ScheduleStatus;
 import com.management.clinic.dao.MedicalScheduleDAO;
 import com.management.clinic.entity.MedicalSchedule;
 import com.management.clinic.mapper.MedicalScheduleMapper;
@@ -10,13 +11,12 @@ import java.util.List;
 
 public class MedicalScheduleDAOImpl extends AbstractDAO<MedicalSchedule> implements MedicalScheduleDAO {
 
-
     @Override
     public Long save(MedicalSchedule medicalSchedule) {
         String sql = "INSERT INTO medical_schedule (created_id, description, schedule, type, status, created_stamp) " +
                 "VALUES (?, ?, ?, ?, ?, ?)";
         return insert(sql, medicalSchedule.getCreatedId(), medicalSchedule.getDescription(),
-                medicalSchedule.getSchedule(), medicalSchedule.getType(), true, new Date());
+                medicalSchedule.getSchedule(), medicalSchedule.getType(), ScheduleStatus.PENDING, new Date());
     }
 
     @Override
@@ -39,7 +39,7 @@ public class MedicalScheduleDAOImpl extends AbstractDAO<MedicalSchedule> impleme
         try {
             MedicalSchedule medicalSchedule = this.findById(id);
             if (medicalSchedule != null) {
-                if (medicalSchedule.getStatus()) {
+                if (medicalSchedule.getStatus().equalsIgnoreCase(ScheduleStatus.PENDING)) {
                     String sql = "DELETE FROM medical_schedule WHERE id = ?";
                     update(sql, id);
                     return true;
@@ -64,7 +64,7 @@ public class MedicalScheduleDAOImpl extends AbstractDAO<MedicalSchedule> impleme
     }
 
     @Override
-    public void updateStatus(Long scheduleId, Boolean status) {
+    public void updateStatus(Long scheduleId, String status) {
         String sql = "UPDATE medical_schedule SET status = ? WHERE id = ?";
         update(sql, status, scheduleId);
     }

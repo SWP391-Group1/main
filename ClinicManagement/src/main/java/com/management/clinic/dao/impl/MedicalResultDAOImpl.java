@@ -16,7 +16,7 @@ public class MedicalResultDAOImpl extends AbstractDAO<MedicalResult> implements 
                 "diagnosis, conclude, created_stamp, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         return insert(sql, medicalResult.getScheduleId(), medicalResult.getPatientId(),
                 medicalResult.getDoctorId(), medicalResult.getName(), medicalResult.getDiagnosis(),
-                medicalResult.getConclude(), new Date(),true);
+                medicalResult.getConclude(), medicalResult.getCreatedStamp(), true);
     }
 
     @Override

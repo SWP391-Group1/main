@@ -35,7 +35,7 @@
                             <div class="card-body">
                                 <h2>Booking Schedule</h2>
                                 <div class="d-flex justify-content-center">
-                                    <form style="width: 400px" id="formLogin" action="<c:url value='/schedule/add'/>" method="POST">
+                                    <form style="width: 400px" id="formLogin" onsubmit="return validateSchedule()" action="<c:url value='/schedule/add'/>" method="POST">
                                         <c:if test="${not empty requestScope.messageParam}">
                                             <div class="alert alert-${requestScope.alert}" role="alert">
                                                     ${requestScope.messageParam}
@@ -56,7 +56,8 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="schedule" class="col-form-label">Date</label><br/>
-                                            <input required id="schedule" name="schedule" type="datetime-local"/>
+                                            <input required id="schedule" name="schedule" onchange="validateSchedule()" type="datetime-local"/>
+                                            <p style="color: red" id="dateMessage"></p>
                                         </div>
                                         <div class="form-group">
                                             <button type="submit" class="btn btn-primary">Regist</button>
@@ -91,5 +92,25 @@
 <script src="js/demo/chart-pie-demo.js"></script>
 
 </body>
+
+<script>
+    function validateSchedule() {
+        var dateTimeStr = document.getElementById("schedule").value;
+        var dateTime = convertDateToUTC(new Date(dateTimeStr));
+        var now = new Date();
+        if (isNaN(dateTime.getTime()) || dateTime <= now) {
+            document.getElementById("dateMessage").innerHTML
+                = "Please select a date and time in the future!";
+            return false;
+        } else {
+            document.getElementById("dateMessage").innerHTML = "";
+        }
+        return true;
+    }
+
+    function convertDateToUTC(date) {
+        return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
+    }
+</script>
 
 </html>

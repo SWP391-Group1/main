@@ -5,11 +5,14 @@ import com.management.clinic.dao.MedicalScheduleDAO;
 import com.management.clinic.entity.MedicalSchedule;
 import com.management.clinic.entity.UserApp;
 import com.management.clinic.service.MedicalScheduleService;
+import com.management.clinic.service.UserService;
+import org.apache.commons.collections.CollectionUtils;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,6 +20,9 @@ public class MedicalScheduleImpl implements MedicalScheduleService {
 
     @Inject
     private MedicalScheduleDAO medicalScheduleDAO;
+
+    @Inject
+    private UserService userService;
 
     @Override
     public MedicalSchedule save(MedicalSchedule medicalSchedule) {
@@ -39,7 +45,6 @@ public class MedicalScheduleImpl implements MedicalScheduleService {
 
     @Override
     public List<MedicalSchedule> findByCreatedId(Long id) {
-
         return medicalScheduleDAO.findByCreatedId(id);
     }
 
@@ -49,10 +54,10 @@ public class MedicalScheduleImpl implements MedicalScheduleService {
     }
 
     @Override
-    public MedicalSchedule buildDataCreate(HttpServletRequest req) throws Exception{
-        HttpSession session= req.getSession();
-        UserApp userApp= (UserApp) session.getAttribute(SessionConstant.USER_APP);
-        String schedule=req.getParameter("schedule");
+    public MedicalSchedule buildDataCreate(HttpServletRequest req) throws Exception {
+        HttpSession session = req.getSession();
+        UserApp userApp = (UserApp) session.getAttribute(SessionConstant.USER_APP);
+        String schedule = req.getParameter("schedule");
         Date scheduleDate = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm").parse(schedule);
         return MedicalSchedule.builder()
                 .createdId(userApp.getId())
@@ -61,16 +66,17 @@ public class MedicalScheduleImpl implements MedicalScheduleService {
                 .schedule(scheduleDate)
                 .build();
     }
+
     @Override
     public MedicalSchedule buildDataUpdate(HttpServletRequest req) throws Exception {
-        String schedule=req.getParameter("schedule");
+        String schedule = req.getParameter("schedule");
 
-        String id=req.getParameter("id");
-        MedicalSchedule medicalSchedule= findById(Long.parseLong(id));
+        String id = req.getParameter("id");
+        MedicalSchedule medicalSchedule = findById(Long.parseLong(id));
         medicalSchedule.setType(req.getParameter("type"));
         medicalSchedule.setDescription(req.getParameter("description"));
 
-        if(schedule!=null&&!schedule.isEmpty()){
+        if (schedule != null && !schedule.isEmpty()) {
             Date scheduleDate = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm").parse(schedule);
             medicalSchedule.setSchedule(scheduleDate);
         }
@@ -78,7 +84,30 @@ public class MedicalScheduleImpl implements MedicalScheduleService {
     }
 
     @Override
-    public void updateStatus(Long scheduleId, Boolean status) {
+    public void updateStatus(Long scheduleId, String status) {
         medicalScheduleDAO.updateStatus(scheduleId, status);
+    }
+
+    @Override
+    public List<MedicalSchedule> findAll() {
+        return medicalScheduleDAO.findAll();
+    }
+
+    @Override
+    public List<MedicalSchedule> getPatientInfo(List<MedicalSchedule> medicalScheduleList) {
+        List<MedicalSchedule> results = new ArrayList<>();
+        if (!CollectionUtils.isEmpty(medicalScheduleList)) {
+            for (MedicalSchedule medicalSchedule : medicalScheduleList) {
+                if (medicalSchedule != null && medicalSchedule.getCreatedId() != null) {
+                    UserApp userApp = userService.findById(medicalSchedule.getCreatedId());
+                    if (userApp != null) {
+                        medicalSchedule.setPatientName(userApp.getFirstName() + " " + userApp.getLastName());
+                        medicalSchedule.setPatientPhone(userApp.getPhoneNumber());
+                        results.add(medicalSchedule);
+                    }
+                }
+            }
+        }
+        return results;
     }
 }

@@ -11,7 +11,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Dashboard</title>
+    <title>Update schedule</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -33,8 +33,10 @@
                     <div class="col-xl-8 col-lg-7">
                         <div class="card shadow mb-4">
                             <div class="card-body">
+                                <h2>Update Schedule</h2>
                                 <div class="d-flex justify-content-center">
-                                    <form style="width: 400px" id="formLogin" action="<c:url value="/schedule/update"/>" method="POST">
+                                    <form style="width: 400px" id="formLogin" onsubmit="return validateSchedule()"
+                                          action="<c:url value="/schedule/update"/>" method="POST">
                                         <input hidden value="${requestScope.medicalSchedule.id}" name="id">
                                         <c:if test="${not empty requestScope.messageParam}">
                                             <div class="alert alert-${requestScope.alert}" role="alert">
@@ -70,7 +72,8 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="schedule" class="col-form-label">New Date</label><br/>
-                                            <input id="schedule" name="schedule" type="datetime-local"/>
+                                            <input required id="schedule" name="schedule" onchange="validateSchedule()" type="datetime-local"/>
+                                            <p style="color: red" id="dateMessage"></p>
                                         </div>
                                         <div class="form-group">
                                             <button type="submit" class="btn btn-primary">Update</button>
@@ -103,6 +106,26 @@
 <!-- Page level custom scripts -->
 <script src="js/demo/chart-area-demo.js"></script>
 <script src="js/demo/chart-pie-demo.js"></script>
+
+<script>
+    function validateSchedule() {
+        var dateTimeStr = document.getElementById("schedule").value;
+        var dateTime = convertDateToUTC(new Date(dateTimeStr));
+        var now = new Date();
+        if (isNaN(dateTime.getTime()) || dateTime <= now) {
+            document.getElementById("dateMessage").innerHTML
+                = "Please select a date and time in the future!";
+            return false;
+        } else {
+            document.getElementById("dateMessage").innerHTML = "";
+        }
+        return true;
+    }
+
+    function convertDateToUTC(date) {
+        return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
+    }
+</script>
 
 </body>
 

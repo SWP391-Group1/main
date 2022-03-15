@@ -141,8 +141,11 @@
         <%@include file="../components/footer/footer.jsp"%>
     </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
+
     function readURL(input) {
+        console.log(input)
         if (input.files && input.files[0]) {
             var reader = new FileReader();
             reader.onload = function (e) {

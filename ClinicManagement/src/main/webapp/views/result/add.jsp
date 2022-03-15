@@ -21,6 +21,15 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
 </head>
 <body id="page-top">
 <div id="wrapper">
@@ -36,6 +45,8 @@
                                 <h2>Add medical result</h2>
                                 <div class="d-flex justify-content-center">
                                     <form style="width: 400px" id="formLogin"
+                                          enctype="multipart/form-data"
+                                          onsubmit="return validateTime()"
                                           action="<c:url value='/result/add'/>"
                                           method="POST">
                                         <c:if test="${not empty requestScope.messageParam}">
@@ -46,39 +57,46 @@
                                         <input hidden value="${requestScope.scheduleSelected.id}" name="scheduleId"/>
                                         <input hidden value="${requestScope.scheduleSelected.createdId}"
                                                name="createdId"/>
-                                        <label for="diagnosis" style="font-weight: bold" class="col-form-label">Diagnosis</label>
+                                        <%--                                        <label for="diagnosis" style="font-weight: bold" class="col-form-label">Diagnosis</label>--%>
                                         <div class="form-group">
                                             <label for="name" class="col-form-label">Name</label>
                                             <input required id="name" name="name"
                                                    class="form-control"/>
                                         </div>
                                         <c:if test="${requestScope.scheduleSelected.type eq 'TEST_COVID'}">
+                                            <label for="name" class="col-form-label">Time  </label>
+                                            <input required id="timeTest" name="timeTest" onchange="validateTime()" type="datetime-local"/>
+                                            <p style="color: red" id="dateMessage"></p>
+
                                             <input type="radio" id="radPositive" name="conclude" value="POSITIVE"><label style="margin-left: 10px"
-                                                                                                                         for="radPositive">POSITIVE</label><br>
+                                                for="radPositive">POSITIVE</label><br>
+
                                             <input type="radio" id="radNegative" name="conclude" value="NEGATIVE"><label style="margin-left: 10px"
-                                                                                                                         for="radNegative">NEGATIVE</label><br>
+                                                for="radNegative">NEGATIVE</label><br>
                                             <input type="text" hidden name="diagnosis" value=" ">
                                         </c:if>
                                         <c:if test="${requestScope.scheduleSelected.type eq 'HEALTH_CARE'}">
-                                        <div class="form-group">
-                                            <label for="diagnosis" class="col-form-label">Diagnosis</label>
-                                            <textarea required id="diagnosis" name="diagnosis" type="text" rows="3"
-                                                      class="form-control"></textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="conclude" class="col-form-label">Conclude</label>
-                                            <textarea required id="conclude" name="conclude" type="text" rows="3"
-                                                      class="form-control"></textarea>
-                                        </div>
+                                            <div class="form-group">
+                                                <label for="diagnosis" class="col-form-label">Diagnosis</label>
+                                                <textarea required id="diagnosis" name="diagnosis" type="text" rows="3"
+                                                          class="form-control"></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="conclude" class="col-form-label">Conclude</label>
+                                                <textarea required id="conclude" name="conclude" type="text" rows="3"
+                                                          class="form-control"></textarea>
+                                            </div>
+                                        </c:if>
 
                                         <div id="method-panels">
 
                                         </div>
                                         <div class="form-group">
                                             <div class="row" style="justify-content: space-evenly">
-                                                <button type="button" class="btn btn-primary" data-toggle="modal"
-                                                        data-target="#chooseMethodModal">Add method
-                                                </button>
+                                                <c:if test="${requestScope.scheduleSelected.type eq 'HEALTH_CARE'}">
+                                                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                            data-target="#chooseMethodModal">Add method
+                                                    </button>
                                                 </c:if>
                                                 <button type="submit" class="btn btn-success">Add result</button>
                                             </div>
@@ -156,16 +174,16 @@
                         <div>
                             <table style="width: 500px">
                                 <tr>
-                                    <td>Method-1</td>
-                                    <td><input name="method" type="checkbox" value="" id="method-1"></td>
+                                    <td>X Ray</td>
+                                    <td><input name="method" type="checkbox" value="" id="X Ray"></td>
                                 </tr>
                                 <tr>
-                                    <td>Method-2</td>
-                                    <td><input name="method" type="checkbox" value="" id="method-2"></td>
+                                    <td>Supersonic</td>
+                                    <td><input name="method" type="checkbox" value="" id="Supersonic"></td>
                                 </tr>
                                 <tr>
-                                    <td>Method-3</td>
-                                    <td><input name="method" type="checkbox" value="" id="method-3"></td>
+                                    <td>Endoscopic</td>
+                                    <td><input name="method" type="checkbox" value="" id="Endoscopic"></td>
                                 </tr>
                             </table>
                         </div>
@@ -201,6 +219,43 @@
 <script src="js/demo/chart-pie-demo.js"></script>
 <script>
 
+    function validateTime() {
+        var dateTimeStr = document.getElementById("timeTest").value;
+        var dateTime = convertDateToUTC(new Date(dateTimeStr));
+        var now = new Date();
+        if (isNaN(dateTime.getTime()) || dateTime > now) {
+            document.getElementById("dateMessage").innerHTML
+                = "Please select a date and time in the past!";
+            return false;
+        } else {
+            document.getElementById("dateMessage").innerHTML = "";
+        }
+        return true;
+    }
+
+    function convertDateToUTC(date) {
+        return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
+    }
+
+    function readURL(input, index) {
+        if (input.files && input.files[0]) {
+            console.log(input.files)
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#blah' + index)
+                    .attr('src', e.target.result)
+                    .width(200)
+                    .height(200);
+            };
+            reader.readAsDataURL(input.files[0]);
+        } else {
+            $('#blah' + index)
+                .attr('src', "/static/image/image.png")
+                .width(200)
+                .height(200);
+        }
+    }
+
     function onAddMethodButtonClick() {
         var choosedMethods = document.getElementsByName("method");
         var methodPanels = document.getElementById("method-panels");
@@ -211,11 +266,14 @@
                 var methodPanels = document.getElementById("method-panels");
                 methodPanels.innerHTML = methodPanels.innerHTML +=
                     "<div id='panelMethod" + (i + 1) + "'" + " style='margin-top: 20px;margin-bottom: 20px'>" +
-                    "<label style='font-weight: bold'>Method" + choosedMethods[i].id + "</label>" +
+                    "<label style='font-weight: bold'>Method: " + choosedMethods[i].id + "</label>" +
 
                     "<div class='form-group'>Diagnosis<textarea required type='text' rows='3' class='form-control' name='diagnosis'" + "></textarea></div>" +
                     "<div class='form-group'>Conclude<textarea required type='text' rows='3' class='form-control' name='conclude'" + "></textarea></div>" +
+                    "<div class='form-group'>Images<input type='file' onchange='readURL(this," + i + ")' accept='image/*' rows='3' class='form-control' name='image@" + i + "'/></div>" +
                     "<div class='form-group'><input hidden name='type' value='" + choosedMethods[i].id + "'/></div>" +
+                    "<div class='form-group'><img id='blah" + (i) + "' width='200' height='200' src='/static/image/image.png' alt='your image' /></div>" +
+
                     "</div>";
             }
         }

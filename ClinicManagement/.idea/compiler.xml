@@ -10,5 +10,8 @@
         <module name="ClinicManagement" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="ClinicManagement" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

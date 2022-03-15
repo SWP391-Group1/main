@@ -1,14 +1,20 @@
 package com.management.clinic.service.impl;
 
+import com.management.clinic.constants.ScheduleStatus;
 import com.management.clinic.dao.MedicalResultDAO;
 import com.management.clinic.entity.MedicalMethod;
 import com.management.clinic.entity.MedicalResult;
+import com.management.clinic.entity.MedicalSchedule;
 import com.management.clinic.service.MedicalResultService;
 import com.management.clinic.service.MedicalScheduleService;
+import org.apache.commons.lang.StringUtils;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MedicalResultServiceImpl implements MedicalResultService {
@@ -19,11 +25,14 @@ public class MedicalResultServiceImpl implements MedicalResultService {
     @Inject
     private MedicalScheduleService scheduleService;
 
+    @Inject
+    private MedicalScheduleService medicalScheduleService;
+
     @Override
     public MedicalResult save(MedicalResult medicalResult) {
         Long id = medicalResultDAO.save(medicalResult);
         if (id != null) {
-            scheduleService.updateStatus(medicalResult.getScheduleId(), Boolean.FALSE);
+            scheduleService.updateStatus(medicalResult.getScheduleId(), ScheduleStatus.COMPLETED);
             return this.findById(id);
         }
         return null;
@@ -37,6 +46,11 @@ public class MedicalResultServiceImpl implements MedicalResultService {
     @Override
     public MedicalResult findById(Long id) {
         return medicalResultDAO.findById(id);
+    }
+
+    @Override
+    public MedicalResult findByScheduleId(Long id) {
+        return medicalResultDAO.findByScheduleId(id);
     }
 
     @Override
@@ -64,14 +78,21 @@ public class MedicalResultServiceImpl implements MedicalResultService {
         return null;
     }
 
-    public MedicalResult buildMedicalResultAdd(HttpServletRequest req) {
+    public MedicalResult buildMedicalResultAdd(HttpServletRequest req) throws ParseException {
         if (req != null) {
+            String timeTest = req.getParameter("timeTest");
+            Date timeTestDate = new Date();
+            if (!StringUtils.isBlank(timeTest)) {
+                timeTestDate = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm").parse(timeTest);
+            }
+
             return MedicalResult.builder()
                     .scheduleId(Long.parseLong(req.getParameter("scheduleId")))
                     .patientId(Long.parseLong(req.getParameter("createdId")))
                     .name(req.getParameter("name"))
                     .diagnosis(req.getParameterValues("diagnosis")[0])
                     .conclude(req.getParameterValues("conclude")[0])
+                    .createdStamp(timeTestDate)
                     .build();
         }
         return null;
@@ -85,8 +106,8 @@ public class MedicalResultServiceImpl implements MedicalResultService {
                     MedicalMethod medicalResult = MedicalMethod.builder()
                             .diagnosis(req.getParameterValues("diagnosis")[i])
                             .conclude(req.getParameterValues("conclude")[i])
-                            .name(req.getParameterValues("type")[i-1])
-                            .type(req.getParameterValues("type")[i-1])
+                            .name(req.getParameterValues("type")[i - 1])
+                            .type(req.getParameterValues("type")[i - 1])
                             .build();
                     medicalMethods.add(medicalResult);
                 }

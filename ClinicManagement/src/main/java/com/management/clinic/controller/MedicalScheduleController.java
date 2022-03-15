@@ -1,10 +1,13 @@
 package com.management.clinic.controller;
 
+import com.management.clinic.constants.Constant;
+import com.management.clinic.constants.ScheduleStatus;
 import com.management.clinic.constants.SessionConstant;
-import com.management.clinic.entity.MedicalResult;
 import com.management.clinic.entity.MedicalSchedule;
 import com.management.clinic.entity.UserApp;
 import com.management.clinic.service.MedicalScheduleService;
+import lombok.SneakyThrows;
+import org.apache.commons.lang.StringUtils;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -14,22 +17,68 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
-@WebServlet(urlPatterns = {"/schedule/add", "/schedule/update", "/schedule/delete","/schedule/table", "/schedule"})
+@WebServlet(urlPatterns = {"/schedule/add", "/schedule/update", "/schedule/delete", "/schedule/table",
+        "/schedule", "/schedule/approve", "/schedule/reject"})
 public class MedicalScheduleController extends HttpServlet {
 
     @Inject
     private MedicalScheduleService scheduleService;
 
+    @SneakyThrows
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         switch (req.getServletPath()) {
-            case "/schedule/table":{
-                HttpSession session=req.getSession();
-                UserApp userApp= (UserApp) session.getAttribute(SessionConstant.USER_APP);
-                List<MedicalSchedule> medicalScheduleList=  scheduleService.findByCreatedId(userApp.getId());
-                req.setAttribute("medicalScheduleList",medicalScheduleList);
+            case "/schedule/table": {
+                String status = req.getParameter("status");
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm");
+                HttpSession session = req.getSession();
+                UserApp userApp = (UserApp) session.getAttribute(SessionConstant.USER_APP);
+                String fromDateStr = req.getParameter("fromTime");
+                String toDateStr = req.getParameter("toTime");
+                List<MedicalSchedule> medicalScheduleList;
+                if (userApp.getRoleName().equals(Constant.ROLE_PATIENT)) {
+                    medicalScheduleList = scheduleService.findByCreatedId(userApp.getId());
+                } else {
+                    medicalScheduleList = scheduleService.findAll();
+                }
+                if (!StringUtils.isBlank(status)) {
+                    if (status.equalsIgnoreCase(ScheduleStatus.PENDING)) {
+                        medicalScheduleList.removeIf(s -> !s.getStatus().equalsIgnoreCase(ScheduleStatus.PENDING));
+                        req.setAttribute("status", ScheduleStatus.PENDING);
+                    } else if (status.equalsIgnoreCase(ScheduleStatus.APPROVED)) {
+                        medicalScheduleList.removeIf(s -> !s.getStatus().equalsIgnoreCase(ScheduleStatus.APPROVED));
+                        req.setAttribute("status", ScheduleStatus.APPROVED);
+                    } else if (status.equalsIgnoreCase(ScheduleStatus.COMPLETED)) {
+                        medicalScheduleList.removeIf(s -> !s.getStatus().equalsIgnoreCase(ScheduleStatus.COMPLETED));
+                        req.setAttribute("status", ScheduleStatus.COMPLETED);
+                    } else if (status.equalsIgnoreCase(ScheduleStatus.REJECTED)) {
+                        medicalScheduleList.removeIf(s -> !s.getStatus().equalsIgnoreCase(ScheduleStatus.REJECTED));
+                        req.setAttribute("status", ScheduleStatus.REJECTED);
+                    } else {
+                        medicalScheduleList.removeIf(s -> s.getStatus().equalsIgnoreCase(ScheduleStatus.REJECTED));
+                    }
+                } else {
+                    medicalScheduleList.removeIf(s -> s.getStatus().equalsIgnoreCase(ScheduleStatus.REJECTED));
+                }
+                if (!StringUtils.isBlank(fromDateStr)) {
+                    Date fromDate = simpleDateFormat.parse(fromDateStr);
+                    if (fromDate != null) {
+                        req.setAttribute("fromTime", fromDate);
+                        medicalScheduleList.removeIf(s -> s.getSchedule().before(fromDate));
+                    }
+                }
+                if (!StringUtils.isBlank(toDateStr)) {
+                    Date toDate = simpleDateFormat.parse(toDateStr);
+                    if (toDate != null) {
+                        req.setAttribute("toTime", toDate);
+                        medicalScheduleList.removeIf(s -> s.getSchedule().after(toDate));
+                    }
+                }
+                req.setAttribute("medicalScheduleList", scheduleService.getPatientInfo(medicalScheduleList));
                 req.getRequestDispatcher("/views/schedule/table.jsp").forward(req, resp);
                 break;
             }
@@ -37,9 +86,9 @@ public class MedicalScheduleController extends HttpServlet {
                 req.getRequestDispatcher("/views/schedule/add.jsp").forward(req, resp);
                 break;
             case "/schedule/update":
-                String scheduleId=req.getParameter("id");
-                MedicalSchedule medicalSchedule= scheduleService.findById(Long.parseLong(scheduleId));
-                req.setAttribute("medicalSchedule",medicalSchedule);
+                String scheduleId = req.getParameter("id");
+                MedicalSchedule medicalSchedule = scheduleService.findById(Long.parseLong(scheduleId));
+                req.setAttribute("medicalSchedule", medicalSchedule);
                 req.getRequestDispatcher("/views/schedule/update.jsp").forward(req, resp);
                 break;
             default:
@@ -55,7 +104,7 @@ public class MedicalScheduleController extends HttpServlet {
                 try {
                     MedicalSchedule schedule = scheduleService.buildDataCreate(req);
                     scheduleService.save(schedule);
-                    resp.sendRedirect("/user/home");
+                    resp.sendRedirect("/schedule/table");
                     return;
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -67,7 +116,7 @@ public class MedicalScheduleController extends HttpServlet {
                 try {
                     MedicalSchedule schedule = scheduleService.buildDataUpdate(req);
                     scheduleService.update(schedule);
-                    resp.sendRedirect("/user/home");
+                    resp.sendRedirect("/schedule/table");
                     return;
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -77,13 +126,31 @@ public class MedicalScheduleController extends HttpServlet {
             case "/schedule/delete": {
                 try {
                     scheduleService.delete(Long.parseLong(req.getParameter("id")));
-                    resp.sendRedirect("/user/home");
+                    resp.sendRedirect("/schedule/table");
                     return;
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
                 break;
             }
+            case "/schedule/approve":
+                try {
+                    scheduleService.updateStatus(Long.parseLong(req.getParameter("id")), ScheduleStatus.APPROVED);
+                    resp.sendRedirect("/schedule/table");
+                    return;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            case "/schedule/reject":
+                try {
+                    scheduleService.updateStatus(Long.parseLong(req.getParameter("id")), ScheduleStatus.REJECTED);
+                    resp.sendRedirect("/schedule/table");
+                    return;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
             default:
                 break;
         }

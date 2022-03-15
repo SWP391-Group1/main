@@ -2,6 +2,8 @@ package com.management.clinic.dao;
 
 import com.management.clinic.entity.UserApp;
 
+import java.util.List;
+
 public interface UserDAO {
 
     UserApp findByUsernameAndPassword(String username, String password);
@@ -15,4 +17,6 @@ public interface UserDAO {
     UserApp findById(Long id);
 
     void changePassword(Long id, String password);
+
+    List<UserApp> getAllUserMember();
 }

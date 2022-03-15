@@ -52,6 +52,14 @@
                                             <input required id="name" name="name"
                                                    class="form-control"/>
                                         </div>
+                                        <c:if test="${requestScope.scheduleSelected.type eq 'TEST_COVID'}">
+                                            <input type="radio" id="radPositive" name="conclude" value="POSITIVE"><label style="margin-left: 10px"
+                                                                                                                         for="radPositive">POSITIVE</label><br>
+                                            <input type="radio" id="radNegative" name="conclude" value="NEGATIVE"><label style="margin-left: 10px"
+                                                                                                                         for="radNegative">NEGATIVE</label><br>
+                                            <input type="text" hidden name="diagnosis" value=" ">
+                                        </c:if>
+                                        <c:if test="${requestScope.scheduleSelected.type eq 'HEALTH_CARE'}">
                                         <div class="form-group">
                                             <label for="diagnosis" class="col-form-label">Diagnosis</label>
                                             <textarea required id="diagnosis" name="diagnosis" type="text" rows="3"
@@ -62,6 +70,7 @@
                                             <textarea required id="conclude" name="conclude" type="text" rows="3"
                                                       class="form-control"></textarea>
                                         </div>
+
                                         <div id="method-panels">
 
                                         </div>
@@ -70,6 +79,7 @@
                                                 <button type="button" class="btn btn-primary" data-toggle="modal"
                                                         data-target="#chooseMethodModal">Add method
                                                 </button>
+                                                </c:if>
                                                 <button type="submit" class="btn btn-success">Add result</button>
                                             </div>
                                         </div>

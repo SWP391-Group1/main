@@ -69,6 +69,12 @@ public class UserController extends HttpServlet {
             case "/user/password":
                 req.getRequestDispatcher("/views/user/password.jsp").forward(req, resp);
                 break;
+            case "/user/member":{
+                List<UserApp> members=userService.getAllUserMember();
+                req.setAttribute("members",members);
+                req.getRequestDispatcher("/views/user/members.jsp").forward(req, resp);
+                break;
+            }
             default:
                 break;
         }
@@ -86,6 +92,7 @@ public class UserController extends HttpServlet {
                 UserApp userApp = userService.singIn(username, password);
                 if (userApp != null) {
                     HttpSession session = req.getSession();
+
                     session.setAttribute(SessionConstant.USER_APP, userApp);
                     url = "/user/home";
                 } else {
@@ -103,12 +110,7 @@ public class UserController extends HttpServlet {
                     userApp.setPassword(password);
                     String src = FileUtil.getUploadImage(req, serverPath);
                     userApp.setAvatar(src);
-//                List<RoleApp> roles= new ArrayList<>();
-//                RoleApp roleUser=new RoleApp();
-//                roleUser.setId(1L);
-//                roleUser.setName("ROLE_USER");
-//                roles.add(roleUser);
-//                userApp.setRoleApps(roles);
+
                     userApp = userService.signUp(userApp);
                     if (userApp != null) {
                         HttpSession session = req.getSession();
@@ -125,14 +127,14 @@ public class UserController extends HttpServlet {
             }
             case "/user/profile": {
                 try {
-                    HttpSession session = req.getSession();
-                    UserApp userApp = (UserApp) session.getAttribute(SessionConstant.USER_APP);
-                    userApp = getUserInforFromRequest(req, userApp);
+                   HttpSession session = req.getSession();
+                   UserApp userApp = (UserApp) session.getAttribute(SessionConstant.USER_APP);
+                   userApp= getUserInforFromRequest(req, userApp);
 
-                    String src = FileUtil.getUploadImage(req, serverPath);
-                    if (src != null && !src.isEmpty()) {
-                        userApp.setAvatar(src);
-                    }
+                   String src= FileUtil.getUploadImage(req,serverPath);
+                   if(src!= null && !src.isEmpty()){
+                       userApp.setAvatar(src);
+                   }
                     userApp = userService.updateInfo(userApp);
                     if (userApp != null) {
                         session.setAttribute(SessionConstant.USER_APP, userApp);

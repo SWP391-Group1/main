@@ -6,6 +6,7 @@ import com.management.clinic.service.UserService;
 import javassist.NotFoundException;
 
 import javax.inject.Inject;
+import java.util.List;
 
 public class UserServiceImpl implements UserService {
 
@@ -54,5 +55,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserApp findById(Long userId) {
         return userDAO.findById(userId);
+    }
+
+    public List<UserApp> getAllUserMember(){
+        return userDAO.getAllUserMember();
     }
 }

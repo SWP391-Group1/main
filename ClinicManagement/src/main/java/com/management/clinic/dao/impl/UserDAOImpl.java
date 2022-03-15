@@ -52,4 +52,9 @@ public class UserDAOImpl extends AbstractDAO<UserApp> implements UserDAO {
         String sql = "UPDATE user SET password = ? WHERE id =?";
         update(sql, password, id);
     }
+
+    public List<UserApp> getAllUserMember() {
+        String sql = "SELECT * FROM user u JOIN role r ON u.role_id=r.id and r.name != 'ADMIN'";
+        return query(sql, new UserAppMapper());
+    }
 }

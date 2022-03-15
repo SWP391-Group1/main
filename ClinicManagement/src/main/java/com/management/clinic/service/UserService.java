@@ -3,6 +3,8 @@ package com.management.clinic.service;
 import com.management.clinic.entity.UserApp;
 import javassist.NotFoundException;
 
+import java.util.List;
+
 public interface UserService {
     UserApp singIn(String username, String password);
 
@@ -13,5 +15,7 @@ public interface UserService {
     UserApp updateInfo(UserApp userApp);
 
     UserApp findById(Long userId);
+
+    List<UserApp> getAllUserMember();
 
 }

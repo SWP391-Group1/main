@@ -18,13 +18,6 @@ public class FileUtil {
             }
             if (!fileName.isEmpty()) {
 
-//                if (!fileName.substring(fileName.lastIndexOf(".") + 1).equals("png")
-//                        && !fileName.substring(fileName.lastIndexOf(".") + 1).equals("jpeg")
-//                        && !fileName.substring(fileName.lastIndexOf(".") + 1).equals("jpg")) {
-//                    return "fail";
-//                }
-
-                //+ File.separator + "image";
                 StringBuilder realPath=new StringBuilder();
                 StringTokenizer stk= new StringTokenizer(serverPath,"\\");
                 while(stk.hasMoreTokens()){

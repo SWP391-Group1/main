@@ -43,19 +43,19 @@
                                 <table class="table">
                                     <thead>
                                     <tr>
-                                        <th style="width: 5%;">Id</th>
-                                        <th style="width: 25%;">Title</th>
-                                        <th style="width: 60%;">Content</th>
-                                        <th style="width: 5%; margin-right: 5px;"></th>
-                                        <th style="width: 5%;"></th>
+                                        <th>Id</th>
+                                        <th>Title</th>
+                                        <th>Description</th>
+                                        <th></th>
+                                        <th></th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <c:forEach var="item" items="${listNews}">
                                         <tr>
-                                            <td>${item.id}
-                                            <td>${item.title}
-                                            <td>${item.content}
+                                            <td>${item.id}</td>
+                                            <td>${item.title}</td>
+                                            <td>${item.shortDescription}</td>
                                             <td>
                                                 <a class="btn btn-warning"
                                                    data-toggle="tooltip"

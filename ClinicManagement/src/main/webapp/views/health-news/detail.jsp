@@ -20,6 +20,7 @@
     <link
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
@@ -74,12 +75,12 @@
                                     <section class="section single-wrapper">
                                         <div class="container">
                                             <div class="row">
-                                                <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="col-12">
                                                     <div class="page-wrapper">
                                                         <div class="blog-title-area text-center">
                                                             <h3>${news.title}</h3>
 
-                                                            <img src="${news.thumbnail}"/>
+                                                            <img class="img-fluid" src="${news.thumbnail}"/>
 
                                                             <div class="blog-meta big-meta">
                                                                 <small><a>${news.createdStamp}</a></small>

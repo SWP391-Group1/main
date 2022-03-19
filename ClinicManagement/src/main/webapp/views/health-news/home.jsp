@@ -88,7 +88,7 @@
                                         <div class="blog-box row">
                                             <div class="col-md-4">
                                                 <div class="post-media">
-                                                    <a href='<c:url value="/news/details?id=${item.id}&user=false"/>'>
+                                                    <a href='<c:url value=""/>'>
                                                         <img src="${item.thumbnail}" alt="" class="img-fluid">
                                                         <div class="hovereffect"></div>
                                                     </a>

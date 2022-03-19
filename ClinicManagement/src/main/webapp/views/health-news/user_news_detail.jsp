@@ -77,12 +77,12 @@
                                     <section class="section single-wrapper">
                                         <div class="container">
                                             <div class="row">
-                                                <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="col-12">
                                                     <div class="page-wrapper">
                                                         <div class="blog-title-area text-center">
                                                             <h3>${news.title}</h3>
 
-                                                            <img src="${news.thumbnail}"/>
+                                                            <img class="img-fluid" src="${news.thumbnail}"/>
 
                                                             <div class="blog-meta big-meta">
                                                                 <small><a>${news.createdStamp}</a></small>

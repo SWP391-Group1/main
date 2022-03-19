@@ -1,11 +1,11 @@
 
-<<<<<<< HEAD
+
 # Created by https://www.toptal.com/developers/gitignore/api/java,intellij
 # Edit at https://www.toptal.com/developers/gitignore?templates=java,intellij
-=======
+
 # Created by https://www.toptal.com/developers/gitignore/api/java,intellij,netbeans
 # Edit at https://www.toptal.com/developers/gitignore?templates=java,intellij,netbeans
->>>>>>> origin/dev
+
 
 ### Intellij ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
@@ -142,9 +142,9 @@ fabric.properties
 hs_err_pid*
 replay_pid*
 
-<<<<<<< HEAD
+
 # End of https://www.toptal.com/developers/gitignore/api/java,intellij
-=======
+
 ### NetBeans ###
 **/nbproject/private/
 **/nbproject/Makefile-*.mk
@@ -156,8 +156,12 @@ nbdist/
 .nb-gradle/
 
 # End of https://www.toptal.com/developers/gitignore/api/java,intellij,netbeans
->>>>>>> origin/dev
-1
+
+
 ClinicManagement/.idea/checkstyle-idea.xml
 ClinicManagement/.idea/jpa-buddy.xml
+ClinicManagement/.idea/misc.xml
+ClinicManagement/target
+ClinicManagement/.idea/dataSources.xml
+ClinicManagement/.idea/dataSources.xml
 ClinicManagement/.idea/misc.xml

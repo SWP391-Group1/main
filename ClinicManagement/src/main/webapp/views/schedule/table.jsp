@@ -220,7 +220,7 @@
                                                                 <button type="submit" class="btn btn-warning">Update</button>
                                                             </form>
                                                             &nbsp;
-                                                            <form action="<c:url value='/schedule/delete'/>" method="POST">
+                                                            <form action="<c:url value='/schedule/delete'/>" method="POST" onSubmit="return confirm('Do you want to delete?')">
                                                                 <input name="id" hidden value="${schedule.id}"/>
                                                                 <button type="submit" class="btn btn-danger">Delete</button>
                                                             </form>

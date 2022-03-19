@@ -65,7 +65,8 @@
                                             </td>
                                             <td>
                                                 <form action="<c:url value="/news/delete?id=${item.id}"/>"
-                                                      method="POST">
+                                                      method="POST"
+                                                      onSubmit="return confirm('Do you want to delete?')">
                                                     <button type="submit" class="btn btn-danger">Delete</button>
                                                 </form>
                                             </td>

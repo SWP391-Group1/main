@@ -83,7 +83,7 @@ public class MedicalResultController extends HttpServlet {
                         Map<Integer, String> paths = FileUtil.getUploadImages(req, serverPath);
                         if (result != null && methodList != null) {
                             for (int i = 0; i < methodList.size(); i++) {
-                                methodList.get(i).setResultId(result.getScheduleId());
+                                methodList.get(i).setResultId(result.getId());
                                 methodList.get(i).setImage(paths.get(i));
                                 methodService.save(methodList.get(i));
                             }

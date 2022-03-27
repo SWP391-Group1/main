@@ -1,3 +1,6 @@
+<%@ page import="com.management.clinic.dao.impl.UserDAOImpl" %>
+<%@ page import="com.management.clinic.entity.UserApp" %>
+<%@ page import="java.util.List" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -47,6 +50,7 @@
         <div id="content">
 
             <%@include file="../components/topbar/topbar.jsp" %>
+
 
             <!-- Begin Page Content -->
             <div class="container-fluid">
@@ -182,26 +186,38 @@
                                                 <c:if test="${sessionScope.USER_ROLE eq 'RECEPTIONIST'}">
                                                     <c:if test="${schedule.status eq 'PENDING'}">
                                                         <div style="display: flex">
-                                                            <form action="<c:url value='/schedule/approve'/>" method="POST">
-                                                                <input name="id" hidden value="${schedule.id}"/>
-                                                                <button type="submit" class="btn btn-success">
-                                                                    Approve
-                                                                </button>
-                                                            </form>
-                                                            &nbsp;&nbsp;
-                                                            <form action="<c:url value='/schedule/reject'/>" method="POST">
-                                                                <input name="id" hidden value="${schedule.id}"/>
-                                                                <button type="submit" class="btn btn-danger">
-                                                                    Reject
-                                                                </button>
-                                                            </form>
-                                                            &nbsp;&nbsp;
-                                                            <form action="<c:url value='/schedule/update'/>" method="GET">
-                                                                <input name="id" hidden value="${schedule.id}"/>
-                                                                <button type="submit" class="btn btn-warning">
-                                                                    Update
-                                                                </button>
-                                                            </form>
+                                                        <form action="<c:url value='/schedule/approve'/>" method="POST">
+                                                            <input name="id" hidden value="${schedule.id}"/>
+                                                            <button type="submit" class="btn btn-success">
+                                                                Approve
+                                                            </button>
+                                                        </form>
+                                                        &nbsp;&nbsp;
+                                                        <form action="<c:url value='/schedule/reject'/>" method="POST">
+                                                            <input name="id" hidden value="${schedule.id}"/>
+                                                            <button type="submit" class="btn btn-danger">
+                                                                Reject
+                                                            </button>
+                                                        </form>
+                                                        &nbsp;&nbsp;
+                                                        <form action="<c:url value='/schedule/update'/>" method="GET">
+                                                            <input name="id" hidden value="${schedule.id}"/>
+                                                            <button type="submit" class="btn btn-warning">
+                                                                Update
+                                                            </button>
+                                                        </form>
+
+                                                    </c:if>
+                                                    <c:if test="${schedule.status eq 'APPROVED'}">
+                                                        <form action="<c:url value='/schedule/assign'/>" method="GET">
+                                                            <input name="id" hidden value="${schedule.id}"/>
+                                                            <c:if test="${schedule.assign eq ''}">
+                                                                <button type="submit" class="btn btn-danger">Assign</button>
+                                                            </c:if>
+                                                            <c:if test="${schedule.assign ne ''}">
+                                                                <button type="submit" class="btn btn-warning">Assigned to Dr. ${schedule.doctor_name}</button>
+                                                            </c:if>
+                                                        </form>
                                                         </div>
                                                     </c:if>
                                                 </c:if>
@@ -287,7 +303,7 @@
                                                                     <c:if test="${schedule.status eq 'PENDING'}">PENDING</c:if>
                                                                     <c:if test="${schedule.status eq 'APPROVED'}">APPROVED</c:if>
                                                                     <c:if test="${schedule.status eq 'COMPLETED'}">COMPLETED</c:if></p>
-                                                                    <c:if test="${schedule.status eq 'REJECTED'}">REJECTED</c:if></p>
+                                                                <c:if test="${schedule.status eq 'REJECTED'}">REJECTED</c:if>
                                                             </div>
                                                             <div class="row">
                                                                 <p class="card-text"
@@ -295,7 +311,7 @@
                                                                     Patient name: </p>
                                                                 <p class="card-text"
                                                                    style="text-align: left;margin-left: 10px;color: #000000">
-                                                                    ${schedule.patientName}</p>
+                                                                        ${schedule.patientName}</p>
                                                             </div>
                                                             <div class="row">
                                                                 <p class="card-text"
@@ -305,6 +321,16 @@
                                                                    style="text-align: left;margin-left: 10px;color: #000000">
                                                                         ${schedule.patientPhone}</p>
                                                             </div>
+                                                            <c:if test="${schedule.assign ne ''}">
+                                                                <div class="row">
+                                                                    <p class="card-text"
+                                                                       style="text-align: left;font-weight: bold;color: #000000">
+                                                                        Doctor: </p>
+                                                                    <p class="card-text"
+                                                                       style="text-align: left;margin-left: 10px;color: #000000">
+                                                                            ${schedule.doctor_name}</p>
+                                                                </div>
+                                                            </c:if>
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">
@@ -399,6 +425,8 @@
     function convertDateToUTC(date) {
         return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
     }
+
+
 </script>
 </body>
 

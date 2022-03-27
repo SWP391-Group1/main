@@ -100,14 +100,23 @@ public class MedicalScheduleImpl implements MedicalScheduleService {
             for (MedicalSchedule medicalSchedule : medicalScheduleList) {
                 if (medicalSchedule != null && medicalSchedule.getCreatedId() != null) {
                     UserApp userApp = userService.findById(medicalSchedule.getCreatedId());
+                    Long drId = medicalScheduleDAO.getDoctor(medicalSchedule.getId());
+                    String name = medicalScheduleDAO.getDoctorName(drId);
                     if (userApp != null) {
                         medicalSchedule.setPatientName(userApp.getFirstName() + " " + userApp.getLastName());
                         medicalSchedule.setPatientPhone(userApp.getPhoneNumber());
+                        medicalSchedule.setAssign(drId);
+                        medicalSchedule.setDoctor_name(name);
                         results.add(medicalSchedule);
                     }
                 }
             }
         }
         return results;
+    }
+
+    @Override
+    public List<MedicalSchedule> findByIdAssign(Long id){
+        return medicalScheduleDAO.findByIdAssign(id);
     }
 }

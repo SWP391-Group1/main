@@ -68,7 +68,6 @@ public class MedicalResultController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String url = "/user/home";
         switch (req.getServletPath()) {
             case "/result/add":
                 try {
@@ -96,6 +95,6 @@ public class MedicalResultController extends HttpServlet {
             default:
                 break;
         }
-        resp.sendRedirect(url);
+        resp.sendRedirect("/schedule/table");
     }
 }

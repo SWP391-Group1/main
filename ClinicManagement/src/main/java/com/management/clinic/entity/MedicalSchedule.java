@@ -24,4 +24,6 @@ public class MedicalSchedule implements Serializable {
     private String status;
     private String patientName;
     private String patientPhone;
+    private Long assign;
+    private String doctor_name;
 }

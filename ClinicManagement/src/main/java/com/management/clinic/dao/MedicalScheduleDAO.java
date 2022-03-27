@@ -19,4 +19,13 @@ public interface MedicalScheduleDAO {
     List<MedicalSchedule> findAll();
 
     void updateStatus(Long scheduleId, String status);
+
+    void updateAssign(Long scheduleId, String doctor);
+
+    Long getDoctor(Long scheduleId);
+
+    String getDoctorName(Long id);
+
+    List<MedicalSchedule> findByIdAssign(Long id);
+
 }

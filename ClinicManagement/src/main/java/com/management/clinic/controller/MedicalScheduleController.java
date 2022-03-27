@@ -3,6 +3,7 @@ package com.management.clinic.controller;
 import com.management.clinic.constants.Constant;
 import com.management.clinic.constants.ScheduleStatus;
 import com.management.clinic.constants.SessionConstant;
+import com.management.clinic.dao.impl.MedicalScheduleDAOImpl;
 import com.management.clinic.entity.MedicalSchedule;
 import com.management.clinic.entity.UserApp;
 import com.management.clinic.service.MedicalScheduleService;
@@ -22,7 +23,7 @@ import java.util.Date;
 import java.util.List;
 
 @WebServlet(urlPatterns = {"/schedule/add", "/schedule/update", "/schedule/delete", "/schedule/table",
-        "/schedule", "/schedule/approve", "/schedule/reject"})
+        "/schedule", "/schedule/approve", "/schedule/reject", "/schedule/assign"})
 public class MedicalScheduleController extends HttpServlet {
 
     @Inject
@@ -43,7 +44,11 @@ public class MedicalScheduleController extends HttpServlet {
                 if (userApp.getRoleName().equals(Constant.ROLE_PATIENT)) {
                     medicalScheduleList = scheduleService.findByCreatedId(userApp.getId());
                 } else {
-                    medicalScheduleList = scheduleService.findAll();
+                    if(userApp.getRoleName().equals(Constant.ROLE_DOCTOR)){
+                        medicalScheduleList = scheduleService.findByIdAssign(userApp.getId());
+                    } else {
+                        medicalScheduleList = scheduleService.findAll();
+                    }
                 }
                 if (!StringUtils.isBlank(status)) {
                     if (status.equalsIgnoreCase(ScheduleStatus.PENDING)) {
@@ -90,6 +95,12 @@ public class MedicalScheduleController extends HttpServlet {
                 MedicalSchedule medicalSchedule = scheduleService.findById(Long.parseLong(scheduleId));
                 req.setAttribute("medicalSchedule", medicalSchedule);
                 req.getRequestDispatcher("/views/schedule/update.jsp").forward(req, resp);
+                break;
+            case "/schedule/assign":
+                String id = req.getParameter("id");
+                MedicalSchedule medicalSch = scheduleService.findById(Long.parseLong(id));
+                req.setAttribute("medicalSchedule", medicalSch);
+                req.getRequestDispatcher("/views/schedule/assign.jsp").forward(req, resp);
                 break;
             default:
                 break;
@@ -145,6 +156,18 @@ public class MedicalScheduleController extends HttpServlet {
             case "/schedule/reject":
                 try {
                     scheduleService.updateStatus(Long.parseLong(req.getParameter("id")), ScheduleStatus.REJECTED);
+                    resp.sendRedirect("/schedule/table");
+                    return;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            case "/schedule/assign":
+                try {
+                    String doctor = req.getParameter("doctor_acc");
+                    Long id = Long.parseLong(req.getParameter("id"));
+                    MedicalScheduleDAOImpl daoMS = new MedicalScheduleDAOImpl();
+                    daoMS.updateAssign(id, doctor);
                     resp.sendRedirect("/schedule/table");
                     return;
                 } catch (Exception e) {

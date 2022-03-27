@@ -30,4 +30,6 @@ public interface UserDAO {
     List<UserApp> findUserByRoleName(String roleName);
 
     List<UserApp> findUserByRoleAndCardID(String roleName, String cardId);
+
+    List<UserApp> getAllDoctor();
 }

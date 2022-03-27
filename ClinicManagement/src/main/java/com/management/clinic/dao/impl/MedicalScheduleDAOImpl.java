@@ -6,10 +6,26 @@ import com.management.clinic.entity.MedicalSchedule;
 import com.management.clinic.mapper.MedicalScheduleMapper;
 import org.apache.commons.collections.CollectionUtils;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
 public class MedicalScheduleDAOImpl extends AbstractDAO<MedicalSchedule> implements MedicalScheduleDAO {
+
+    @Override
+    public void updateAssign(Long scheduleId, String doctor){
+        String sql = "UPDATE medical_schedule SET assign=? WHERE id =?";
+        update(sql, doctor, scheduleId);
+    }
+
+    @Override
+    public List<MedicalSchedule> findByIdAssign(Long id) {
+        String sql = "SELECT * FROM medical_schedule WHERE assign= ?";
+        return query(sql, new MedicalScheduleMapper(), id);
+    }
 
     @Override
     public Long save(MedicalSchedule medicalSchedule) {
@@ -67,5 +83,64 @@ public class MedicalScheduleDAOImpl extends AbstractDAO<MedicalSchedule> impleme
     public void updateStatus(Long scheduleId, String status) {
         String sql = "UPDATE medical_schedule SET status = ? WHERE id = ?";
         update(sql, status, scheduleId);
+    }
+
+    @Override
+    public Long getDoctor(Long scheduleId){
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        String sql = "SELECT assign FROM medical_schedule WHERE id = ?";
+        Long id = null;
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setLong(1, scheduleId);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                id = resultSet.getLong(1);
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            if(connection!=null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return id;
+    }
+
+    @Override
+    public String getDoctorName(Long id){
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        String sql = "SELECT * FROM user WHERE id = ?";
+        String fname = "", lname = "";
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setLong(1, id);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                fname = resultSet.getString(4);
+                lname = resultSet.getString(5);
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            if(connection!=null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return fname + " " + lname;
     }
 }

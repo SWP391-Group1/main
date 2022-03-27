@@ -1,3 +1,6 @@
+<%@ page import="com.management.clinic.dao.impl.UserDAOImpl" %>
+<%@ page import="com.management.clinic.entity.UserApp" %>
+<%@ page import="java.util.List" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -11,7 +14,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Booking Schedule</title>
+    <title>Update schedule</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -33,34 +36,35 @@
                     <div class="col-xl-8 col-lg-7">
                         <div class="card shadow mb-4">
                             <div class="card-body">
-                                <h2>Booking Schedule</h2>
+                                <h2>Assign</h2>
                                 <div class="d-flex justify-content-center">
-                                    <form style="width: 400px" id="formLogin" onsubmit="return validateSchedule()" action="<c:url value='/schedule/add'/>" method="POST">
-                                        <c:if test="${not empty requestScope.messageParam}">
-                                            <div class="alert alert-${requestScope.alert}" role="alert">
-                                                    ${requestScope.messageParam}
-                                            </div>
-                                        </c:if>
+                                    <form style="width: 400px" onsubmit="return checkAssign()" action="<c:url value='/schedule/assign'/>" method="POST">
+                                        <input hidden value="${requestScope.medicalSchedule.id}" name="id">
                                         <div class="form-group">
-                                            <label class="form-check-label" for="type">
-                                                Type
-                                            </label>
-                                            <select id="type" name="type" class="form-control form-control-lg">
-                                                <option selected value="HEALTH_CARE">Health care</option>
-                                                <option value="TEST_COVID">Test covid</option>
+                                            <label class="col-form-label">Type</label>
+                                            <textarea required readonly id="type" type="text" rows="1" class="form-control">${requestScope.medicalSchedule.type}</textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-form-label">Date</label><br/>
+                                            <fmt:formatDate pattern="dd-MM-yyyy HH:mm a" value="${requestScope.medicalSchedule.schedule}"/>
+                                        </div>
+
+                                        <div>
+                                            <label class="col-form-label">Assign to</label><br/>
+                                            <select name="doctor_acc" id="doctor_acc">
+                                                <option value="">Choose a doctor</option>
+                                                <%
+                                                    UserDAOImpl daoUser = new UserDAOImpl();
+                                                    List<UserApp> listDr = daoUser.getAllDoctor();
+                                                    for(UserApp item : listDr){
+                                                %>
+                                                <option value="<%=item.getId() %>">Dr. <%=item.getFirstName() + " " + item.getLastName() %></option>
+                                                <% } %>
                                             </select>
                                         </div>
+                                        </br>
                                         <div class="form-group">
-                                            <label for="description" class="col-form-label">Description</label>
-                                            <textarea required id="description" name="description" type="text" rows="3" class="form-control"></textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="schedule" class="col-form-label">Date</label><br/>
-                                            <input required id="schedule" name="schedule" onchange="validateSchedule()" type="datetime-local"/>
-                                            <p style="color: red" id="dateMessage"></p>
-                                        </div>
-                                        <div class="form-group">
-                                            <button type="submit" class="btn btn-primary">Register</button>
+                                            <button type="submit" class="btn btn-primary">Assign</button>
                                         </div>
                                     </form>
                                 </div>
@@ -91,26 +95,18 @@
 <script src="js/demo/chart-area-demo.js"></script>
 <script src="js/demo/chart-pie-demo.js"></script>
 
-</body>
-
 <script>
-    function validateSchedule() {
-        var dateTimeStr = document.getElementById("schedule").value;
-        var dateTime = convertDateToUTC(new Date(dateTimeStr));
-        var now = new Date();
-        if (isNaN(dateTime.getTime()) || dateTime <= now) {
-            document.getElementById("dateMessage").innerHTML
-                = "Please select a date and time in the future!";
-            return false;
+    function checkAssign() {
+        var n = document.getElementById("doctor_acc");
+        if(n.value != "") {
+            return true;
         } else {
-            document.getElementById("dateMessage").innerHTML = "";
+            alert("Choose a doctor");
+            return false;
         }
-        return true;
-    }
-
-    function convertDateToUTC(date) {
-        return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
     }
 </script>
+
+</body>
 
 </html>

@@ -14,6 +14,12 @@ import java.util.List;
 public class UserDAOImpl extends AbstractDAO<UserApp> implements UserDAO {
 
     @Override
+    public List<UserApp> getAllDoctor() {
+        String sql = "SELECT * FROM user WHERE role_id = '2'";
+        return query(sql, new UserAppMapper());
+    }
+
+    @Override
     public UserApp findByUsernameAndPassword(String username, String password) {
         String sql = "SELECT * FROM user u join role r ON u.role_id=r.id  WHERE username =? AND password =? ";
         List<UserApp> userApps = query(sql, new UserAppMapper(), username, password);

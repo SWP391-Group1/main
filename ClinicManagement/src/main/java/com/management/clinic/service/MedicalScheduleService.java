@@ -26,4 +26,6 @@ public interface MedicalScheduleService {
     List<MedicalSchedule> findAll();
 
     List<MedicalSchedule> getPatientInfo(List<MedicalSchedule> medicalScheduleList);
+
+    List<MedicalSchedule> findByIdAssign(Long id);
 }

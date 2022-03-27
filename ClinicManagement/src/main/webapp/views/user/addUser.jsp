@@ -107,7 +107,7 @@
                         <img id="blah" width="200" height="200" src="<c:url value="/static/image/image.png"/>" alt="your image" />
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary">Register</button>
+                        <button type="submit" class="btn btn-primary">Add User</button>
                     </div>
                 </form>
             </div>

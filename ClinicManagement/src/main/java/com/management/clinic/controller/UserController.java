@@ -179,6 +179,7 @@ public class UserController extends HttpServlet {
                     String src = FileUtil.getUploadImage(req, serverPath);
                     userApp.setAvatar(src);
                     userApp.setRoleId(Long.parseLong(req.getParameter("type")));
+            //        System.out.println(req.getParameter("type"));
 //                    List<RoleApp> roles= new ArrayList<>();
 //                    RoleApp roleUser=new RoleApp();
 //                    roleUser.setId(Long.parseLong(req.getParameter("type")));

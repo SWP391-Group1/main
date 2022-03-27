@@ -48,7 +48,7 @@
                                     <tr>
                                         <th style="width: 5%;">Id</th>
                                         <th style="width: 25%;">Title</th>
-                                        <th style="width: 60%;">Content</th>
+                                        <th style="width: 60%;">Description</th>
                                         <th style="width: 5%; margin-right: 5px;"></th>
                                         <th style="width: 5%;"></th>
                                     </tr>
@@ -56,9 +56,9 @@
                                     <tbody>
                                     <c:forEach var="item" items="${listNews}">
                                         <tr>
-                                            <td>${item.id}
-                                            <td>${item.title}
-                                            <td>${item.content}
+                                            <td>${item.id}</td>
+                                            <td>${item.title}</td>
+                                            <td>${item.shortDescription}</td>
                                             <td>
                                                 <a class="btn btn-warning"
                                                    data-toggle="tooltip"
@@ -68,7 +68,8 @@
                                             </td>
                                             <td>
                                                 <form action="<c:url value="/news/delete?id=${item.id}"/>"
-                                                      method="POST">
+                                                      method="POST"
+                                                      onSubmit="return confirm('Do you want to delete?')">
                                                     <button type="submit" class="btn btn-danger">Delete</button>
                                                 </form>
                                             </td>

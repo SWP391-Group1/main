@@ -79,7 +79,7 @@
                                                         <div class="blog-title-area text-center">
                                                             <h3>${news.title}</h3>
 
-                                                            <img src="${news.thumbnail}"/>
+                                                            <img class="img-fluid" src="${news.thumbnail}"/>
 
                                                             <div class="blog-meta big-meta">
                                                                 <small><a>${news.createdStamp}</a></small>

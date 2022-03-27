@@ -1,6 +1,7 @@
 package com.management.clinic.service.impl;
 
 import com.management.clinic.dao.HealthNewsDAO;
+import com.management.clinic.dao.UserDAO;
 import com.management.clinic.entity.HealthNews;
 import com.management.clinic.entity.UserApp;
 import com.management.clinic.paging.Pageable;
@@ -21,7 +22,7 @@ public class HealthNewsServiceImpl implements HealthNewsService {
     private HealthNewsDAO healthNewsDAO;
 
     @Inject
-    private UserService userService;
+    private UserDAO userDAO;
 
     @Override
     public HealthNews save(HealthNews healthNews) {
@@ -91,7 +92,7 @@ public class HealthNewsServiceImpl implements HealthNewsService {
         if (!CollectionUtils.isEmpty(healthNews)) {
             for (HealthNews healthNew : healthNews) {
                 if (healthNew != null && healthNew.getCreatedId() != null) {
-                    UserApp userApp = userService.findById(healthNew.getCreatedId());
+                    UserApp userApp = userDAO.findById(healthNew.getCreatedId());
                     if (userApp != null) {
                         healthNew.setCreatedBy(userApp.getFirstName() + " " + userApp.getLastName());
                     }

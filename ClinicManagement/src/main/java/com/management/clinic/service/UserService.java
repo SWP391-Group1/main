@@ -22,4 +22,6 @@ public interface UserService {
     List<UserApp> getAllUserMember();
 
     List<UserApp> getUserMember(String type);
+
+    List<UserApp> getUserMemberByCardID(String type, String cardID);
 }

@@ -54,7 +54,13 @@
                             <!-- Card Body -->
                             <div class="card-body">
                                 <div class="form-group" style="display: flex; float: right;">
+                                    <div>
+
+                                        <a href="<c:url value='/user/addDoctor'/>" type="button" class="btn btn-success">Add User</a>
+                                    </div>
                                     <form method="GET" action="<c:url value='/user/member'/>">
+                                        <input type="text" placeholder="Search by card ID" name="cardID" id="cardID ">
+                                    <button type="submit" class="btn btn-primary">Search</button>
                                         <select id="type" name="type"
                                                 class="form-control"
                                                 style="width: 500px; float: right;"
@@ -77,6 +83,7 @@
                                             <th>Lastname</th>
                                             <th>Phone</th>
                                             <th>Email</th>
+                                            <th>Card ID</th>
                                             <th>Role</th>
 
                                         </tr>
@@ -113,6 +120,11 @@
                                                 <td>
                                                     <div>
                                                             ${member.email}
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                            ${member.cardId}
                                                     </div>
                                                 </td>
                                                 <td>

@@ -86,4 +86,10 @@ public class UserDAOImpl extends AbstractDAO<UserApp> implements UserDAO {
         String sql = "SELECT * FROM user u JOIN role r ON u.role_id=r.id and r.name = ?";
         return query(sql, new UserAppMapper(), roleName);
     }
+
+    @Override
+    public List<UserApp> findUserByRoleAndCardID(String roleName, String cardId) {
+        String sql = "SELECT * FROM user u JOIN role r ON u.role_id=r.id AND r.name = ? AND u.card_id = ?";
+        return query(sql, new UserAppMapper(), roleName, cardId);
+    }
 }

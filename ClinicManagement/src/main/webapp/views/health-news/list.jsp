@@ -39,6 +39,9 @@
                                     <h2>List health news</h2>
                                     <a href="<c:url value='/news/add'/>" type="button" class="btn btn-success">Add
                                         health news</a>
+                                    <form method="GET" action="<c:url value='/news'/>">
+                                        <input type="text" placeholder="Search by title" name="title" id="title ">
+                                    </form>
                                 </div>
                                 <table class="table">
                                     <thead>

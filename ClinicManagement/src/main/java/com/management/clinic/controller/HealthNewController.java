@@ -2,8 +2,12 @@ package com.management.clinic.controller;
 
 import com.management.clinic.constants.SessionConstant;
 import com.management.clinic.entity.HealthNews;
+import com.management.clinic.entity.PagingModel;
 import com.management.clinic.entity.UserApp;
+import com.management.clinic.paging.PageRequest;
+import com.management.clinic.paging.Pageable;
 import com.management.clinic.service.HealthNewsService;
+import com.management.clinic.sort.Sorter;
 import com.management.clinic.utils.FileUtil;
 import lombok.SneakyThrows;
 import org.apache.commons.lang.StringUtils;
@@ -17,6 +21,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 @WebServlet(urlPatterns = {"/news", "/news/add", "/news/delete", "/news/details","/news/user/details"})
 @MultipartConfig(fileSizeThreshold = 1024 * 1024,
@@ -33,9 +40,37 @@ public class HealthNewController extends HttpServlet {
             case "/news":
                 HttpSession session = req.getSession();
                 UserApp userApp = (UserApp) session.getAttribute(SessionConstant.USER_APP);
+                List<HealthNews> listNew = new ArrayList<>();
+                String title = req.getParameter("title");
                 if (userApp != null) {
-                    req.setAttribute("listNews", healthNewsService.findByCreatedId(userApp.getId()));
+                    List <HealthNews> listAllNews = healthNewsService.findByCreatedId(userApp.getId());
+                    if(!StringUtils.isBlank(title)){
+                        for (int i = 0; i < listAllNews.size(); i++) {
+                            if(listAllNews.get(i).getTitle().toLowerCase(Locale.ROOT).contains(title.toLowerCase(Locale.ROOT))){
+                                listNew.add(listAllNews.get(i));
+                            }
+                        }
+                    }
+                    else {
+                        listNew = listAllNews;
+                    }
                 }
+                req.setAttribute("listNews", listNew);
+
+                PagingModel model = PagingModel.builder()
+                        .page(StringUtils.isBlank(req.getParameter("page"))
+                                ? 1 : Integer.parseInt(req.getParameter("page")))
+                        .maxPageItem(StringUtils.isBlank(req.getParameter("maxPageItem"))
+                                ? 4 : Integer.parseInt(req.getParameter("maxPageItem")))
+                        .sortName(req.getParameter("sortName"))
+                        .sortBy(req.getParameter("sortBy"))
+                        .build();
+                Pageable pageable = new PageRequest(model.getPage(), model.getMaxPageItem(), new Sorter(model.getSortName(), model.getSortBy()));
+                model.setListResult(healthNewsService.findAll(pageable));
+                model.setTotalItem(healthNewsService.getTotalItem());
+                model.setTotalPage((int) Math.ceil((double) model.getTotalItem() / model.getMaxPageItem()));
+                req.setAttribute("model", model);
+
                 req.getRequestDispatcher("/views/health-news/list.jsp").forward(req, resp);
                 break;
             case "/news/add":

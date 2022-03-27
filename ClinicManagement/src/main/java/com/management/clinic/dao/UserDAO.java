@@ -28,4 +28,6 @@ public interface UserDAO {
     List<UserApp> getAllUserMember();
 
     List<UserApp> findUserByRoleName(String roleName);
+
+    List<UserApp> findUserByRoleAndCardID(String roleName, String cardId);
 }

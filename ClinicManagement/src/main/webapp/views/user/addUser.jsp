@@ -27,7 +27,7 @@
                 </div>
             </div>
             <div class="d-flex justify-content-center">
-                <form onsubmit="return checkFormRegist()" id="formLogin" action="<c:url value="/user/sign-up"/>" method="POST" enctype="multipart/form-data">
+                <form onsubmit="return checkFormRegist()" id="formLogin" action="<c:url value="/user/addDoctor"/>" method="POST" enctype="multipart/form-data">
                     <c:if test="${not empty requestScope.messageParam}">
                         <div class="alert alert-${requestScope.alert}" role="alert">
                                 ${requestScope.messageParam}
@@ -78,6 +78,13 @@
                                 Female
                             </label>
                         </div>
+                        <select id="type" name="type"
+                                class="form-control"
+                                style="width: 500px; float: right;">
+                            <option  value="2">Doctor</option>
+                            <option  value="4">Patient</option>
+                            <option  value="3">Receptionist</option>
+                        </select>
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="gender" id="exampleRadios2" value="1">
                             <label class="form-check-label" for="exampleRadios2">

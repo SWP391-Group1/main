@@ -126,4 +126,12 @@ public class UserServiceImpl implements UserService {
         }
         return this.getAllUserMember();
     }
+
+    @Override
+    public List<UserApp> getUserMemberByCardID(String type, String cardID) {
+        if (!StringUtils.isBlank(cardID)) {
+            return userDAO.findUserByRoleAndCardID(type, cardID);
+        }
+        return this.getUserMember(type);
+    }
 }
